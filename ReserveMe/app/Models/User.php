@@ -18,12 +18,14 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    public function reservations() {
-        return $this->hasMany(Reservation::class,'id_user');
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'id_user');
     }
 
     protected $fillable = [
         'name',
+        'lastName',
         'email',
         'password',
     ];
