@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DarkModeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,7 @@ Route::get('/dashboard', function () {
 Route::get('/menu', function () {
     return view('reserve.menu');
 })->name('menu');
+
+Route::get('/actualizar-perfil', function () {
+    return view('reserve.actualizar-perfil');
+})->name('actualizar-perfil');

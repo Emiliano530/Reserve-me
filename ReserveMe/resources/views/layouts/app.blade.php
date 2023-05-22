@@ -22,7 +22,8 @@
 <body class="font-sans antialiased">
     <x-banner />
 
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div class="min-h-screen bg-gray-100 dark:bg-indigo-950 bg-repeat"
+    style="background-image: url('{{ asset('img/pattern.svg') }}');">
         @livewire('navigation-menu')
 
         <!-- Page Heading -->
@@ -35,7 +36,7 @@
         @endif
 
         <!-- Page Content -->
-        <main>
+        <main class="mt-16">
             {{ $slot }}
         </main>
 
