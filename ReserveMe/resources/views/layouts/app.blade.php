@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>ReserveMe</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <link href="https://fonts.googleapis.com/css2?family=Inria+Serif&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/swiper/swiper-bundle.min.css" />
+
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -21,33 +23,29 @@
     @livewireStyles
 </head>
 
-<body class="font-inria antialiased">
-    <x-banner />
+<body class="font-inria antialiased flex flex-col justify-between min-h-screen bg-indigo-950 bg-repeat"
+    style="background-image: url('{{ asset('img/pattern.svg') }}');">
+    @livewire('navigation-menu')
 
-    <div class="min-h-screen bg-gray-100 dark:bg-indigo-950 bg-repeat"
-        style="background-image: url('{{ asset('img/pattern.svg') }}');">
-        @livewire('navigation-menu')
+    <!-- Page Heading -->
+    @if (isset($header))
+        <header class="bg-white dark:bg-gray-800 shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
+    @endif
 
-        <!-- Page Heading -->
-        @if (isset($header))
-            <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endif
 
-        <!-- Page Content -->
-        <main class="mt-16">
-            {{ $slot }}
-        </main>
+    <!-- Page Content -->
+    <main class="py-16 flex-grow flex justify-center items-center">
+        {{ $slot }}
+    </main>
 
-        <x-footer />
-    </div>
-
+    <x-footer />
     @stack('modals')
-
     @livewireScripts
+    <script src="node_modules/swiper/swiper-bundle.min.js"></script>
 </body>
 
 </html>
