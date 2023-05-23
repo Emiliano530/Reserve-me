@@ -15,6 +15,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                inria: ['Inria Serif', 'sans-serif'],
             },
             colors: {
                 color_1: '#000000',
