@@ -2,7 +2,7 @@
     style="background-image: url('{{ asset('img/login_bg.svg') }}');">
 
 
-    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-emerald-900 shadow-md overflow-hidden sm:rounded-3xl">
+    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-indigo-900 shadow-md overflow-hidden sm:rounded-3xl">
         <div class="flex items-center justify-center">
             @isset($logo)
                 {{ $logo }}

@@ -1,3 +1,3 @@
 <x-app-layout>
-   mm
+   @livewire('menu')
 </x-app-layout>

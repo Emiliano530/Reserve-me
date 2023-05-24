@@ -25,7 +25,7 @@
 
 <body class="font-inria antialiased flex flex-col justify-between min-h-screen bg-indigo-950 bg-repeat"
     style="background-image: url('{{ asset('img/pattern.svg') }}');">
-    @livewire('navigation-menu')
+    @livewire('navbar')
 
     <!-- Page Heading -->
     @if (isset($header))
