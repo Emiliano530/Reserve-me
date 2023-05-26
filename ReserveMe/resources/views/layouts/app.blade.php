@@ -13,6 +13,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <link href="https://fonts.googleapis.com/css2?family=Inria+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="node_modules/swiper/swiper-bundle.min.css" />
 
 
@@ -23,10 +24,10 @@
     @livewireStyles
 </head>
 
-<body class="font-inria antialiased flex flex-col justify-between min-h-screen bg-indigo-950 bg-repeat"
+<body class="font-inria antialiased flex flex-col justify-between min-h-screen bg-indigo-950 bg-repeat z-10"
     style="background-image: url('{{ asset('img/pattern.svg') }}');">
     @livewire('navbar')
-
+    @livewire('fast-booking')
     <!-- Page Heading -->
     @if (isset($header))
         <header class="bg-white dark:bg-gray-800 shadow">
@@ -36,12 +37,11 @@
         </header>
     @endif
 
-
+    
     <!-- Page Content -->
     <main class="py-16 flex-grow flex justify-center items-center">
         {{ $slot }}
     </main>
-
     <x-footer />
     @stack('modals')
     @livewireScripts

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DarkModeController;
+use App\Http\Livewire\MostrarOpciones;
 use Illuminate\Support\Facades\Route;
 
 /*
