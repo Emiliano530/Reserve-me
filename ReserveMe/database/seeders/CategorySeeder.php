@@ -15,10 +15,19 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
-                'category_name' => 'Bebida',
+                'category_name' => 'Comidas',
             ],
             [
-                'category_name' => 'Comida',
+                'category_name' => 'Cafes',
+            ],
+            [
+                'category_name' => 'Postres',
+            ],
+            [
+                'category_name' => 'Panes',
+            ],
+            [
+                'category_name' => 'Bebidas',
             ],
             // Agrega más registros según sea necesario
         ];
