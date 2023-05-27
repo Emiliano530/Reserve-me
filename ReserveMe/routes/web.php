@@ -30,3 +30,4 @@ Route::get('/menu', function () {
 Route::get('/actualizar-perfil', function () {
     return view('reserve.actualizar-perfil');
 })->name('actualizar-perfil');
+
