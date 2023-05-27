@@ -13,13 +13,18 @@ class FastBooking extends Component
     public $fecha;
     public $hora;
     public $cantidad_personas;
-    public $mensaje;
+
 
     public function render()
     {
         return view('livewire.fast-booking');
     }
 
+    public function reloadComponent()
+    {
+        // Realiza cualquier lógica adicional si es necesario
+        $this->reset(); // Reinicia los datos del componente
+    }
     public function MakeReservation()
     {
         // Verificar si el usuario está autenticado
@@ -97,14 +102,17 @@ class FastBooking extends Component
 
                 // Redireccionar o realizar alguna otra acción después de guardar la reserva
                 // Por ejemplo, redireccionar a una página de éxito o mostrar un mensaje de confirmación
-                $this->mensaje = '¡Reserva guardada exitosamente!';
+                $this->emit('notification', 'hecho', '¡Reserva guardada exitosamente!');
+                $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
             } else {
                 // Mostrar un mensaje de error indicando que no hay mesas disponibles
-                $this->mensaje = 'No hay mesas disponibles para hacer la reserva.';
+                $this->emit('notification', 'error', 'No hay mesas disponibles para hacer la reserva.');
+                $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
             }
         } else {
             // Mostrar un mensaje de error indicando que no hay suficiente capacidad
-            $this->mensaje = 'No hay suficiente capacidad en el local para la cantidad de personas especificada.';
+            $this->emit('notification', 'error', 'No hay suficiente capacidad en el local para la cantidad de personas especificada.');
+            $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
         }
     }
 
@@ -129,7 +137,7 @@ class FastBooking extends Component
             // Establecer la fecha y hora actuales de México por defecto
             $mexicoTimezone = 'America/Mexico_City';
             $mexicoTime = Carbon::now($mexicoTimezone)->format('H:i');
-    
+
             $this->fecha = now()->format('Y-m-d');
             $this->hora = $mexicoTime;
         }

@@ -1,12 +1,5 @@
 <div class="flex justify-start flex-col items-center text-center w-screen">
-    @if ($mensaje)
-        <div class="mensaje flex items-center mt-4 justify-center" x-data="{ show: true }" x-show="show"
-            x-init="setTimeout(() => show = false, 1000)">
-            <div id="flash-message" class="max-w-2xl mx-auto bg-emerald-700 text-white p-5 m-2 rounded-3xl">
-                {{ $mensaje }}
-            </div>
-        </div>
-    @endif
+
     <div class="flex gap-10 pt-16 px-44">
         <div class="relative w-44 h-44">
             @if ($profileAvatar)
@@ -39,7 +32,7 @@
                         <div class="col-span-6 sm:col-span-4 mt-4">
                             <x-label for="name" value="{{ __('Nombre/s') }}" />
                             <x-input id="name" placeholder="Agrega tu nombre" wire:model="name" type="text"
-                                class="mt-1 block w-full" autocomplete="name" />
+                                class="mt-1 block w-full" autocomplete="name"/>
                             <x-input-error for="name" class="mt-2" />
                         </div>
                         <div class="col-span-6 sm:col-span-4 mt-4">
@@ -66,11 +59,9 @@
                                 class="mt-1 block w-full" autocomplete="email" />
                             <x-input-error for="email" class="mt-2" />
                         </div>
-                        <a href="#">
-                            <x-primary-button class="mt-5">
-                                {{ __('Guardar') }}
-                            </x-primary-button>
-                        </a>
+                        <x-primary-button class="mt-5">
+                            {{ __('Guardar') }}
+                        </x-primary-button>
                     </div>
                 </div>
             </div>
@@ -99,13 +90,53 @@
                             autocomplete="new-password" />
                         <x-input-error for="confirmPassword" class="mt-2" />
                     </div>
-                    <a href="#">
-                        <x-primary-button class="mt-5">
-                            {{ __('Guardar') }}
-                        </x-primary-button>
-                    </a>
+                    <x-primary-button class="mt-5">
+                        {{ __('Guardar') }}
+                    </x-primary-button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('livewire:load', function () {
+        Livewire.on('notification', function (type, message) {
+            var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
+            var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
+            Swal.fire({
+                title: type,
+                text: message,
+                icon: icon,
+                timer: timer, // Tiempo en milisegundos
+                showConfirmButton: false
+            });
+        });
+
+        function getIconByType(type) {
+            // Asignar el icono correspondiente según el tipo de mensaje
+            switch (type) {
+                case 'error':
+                    return 'error';
+                case 'hecho':
+                    return 'success';
+                // Agregar más casos según sea necesario
+                default:
+                    return 'info';
+            }
+        }
+
+        function getTimerByType(type) {
+            // Asignar el temporizador correspondiente según el tipo de mensaje
+            switch (type) {
+                case 'error':
+                    return 3000; // 2 segundos
+                // Agregar más casos según sea necesario
+                default:
+                    return 1500; // 1.5 segundos (valor predeterminado)
+            }
+        }
+    });
+</script>
+
+
+    

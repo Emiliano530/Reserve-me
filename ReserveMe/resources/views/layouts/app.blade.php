@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>ReserveMe</title>
-
+    <link rel="icon" type="image/png" href="{{ asset('img/dajohu.svg') }}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -24,7 +24,7 @@
     @livewireStyles
 </head>
 
-<body class="font-inria antialiased flex flex-col justify-between min-h-screen bg-indigo-950 bg-repeat z-10"
+<body class="no-horizontal-scroll font-inria antialiased flex flex-col justify-between min-h-screen bg-indigo-950 bg-repeat z-10 scrollbar-w-0"
     style="background-image: url('{{ asset('img/pattern.svg') }}');">
     @livewire('navbar')
     @livewire('fast-booking')
@@ -47,5 +47,11 @@
     @livewireScripts
     <script src="node_modules/swiper/swiper-bundle.min.js"></script>
 </body>
-
+<style>
+    .no-horizontal-scroll {
+        overflow-x: hidden; /* Oculta la barra de desplazamiento horizontal */
+    }
+</style>
 </html>
+
+

@@ -21,8 +21,6 @@ class UpdateProfile extends Component
     public $newPassword;
     public $confirmPassword;
     public $profileAvatar;
-    public $mensaje;
-
     protected $listeners = ['profileUpdated' => '$refresh'];
 
     public function mount()
@@ -58,14 +56,20 @@ class UpdateProfile extends Component
             $user->profile_avatar = $imageData;
             $user->save();
 
-            $this->mensaje = 'Imagen de perfil actualizada exitosamente.';
-            $this->emit('profileUpdated');
+            $this->emit('notification', 'hecho', 'Imagen de perfil actualizada exitosamente.');
             $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
         }
     }
 
     public function update()
     {
+        $this->validate([
+            'name' => 'required', // Ajusta las reglas de validación según tus necesidades
+            'lastName' => 'required',
+            'phone' => 'required',
+            'birthday' => 'required',
+            'email' => 'required',
+        ]);
         $user = User::find($this->userId);
 
         $user->name = $this->name;
@@ -81,13 +85,17 @@ class UpdateProfile extends Component
         $this->newPassword = '';
         $this->confirmPassword = '';
 
-        $this->mensaje = 'Usuario actualizado exitosamente.';
-        $this->emit('profileUpdated');
+        $this->emit('notification', 'hecho', 'Usuario actualizado exitosamente.');
         $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
     }
 
     public function updatePassword()
     {
+        $this->validate([
+            'currentPassword' => 'required', // Ajusta las reglas de validación según tus necesidades
+            'newPassword' => 'required',
+            'confirmPassword' => 'required',
+        ]);
         $user = User::find($this->userId);
         // Verificar si la contraseña actual ingresada coincide con la contraseña del usuario
         if (!password_verify($this->currentPassword, $user->password)) {
@@ -112,7 +120,7 @@ class UpdateProfile extends Component
         $this->newPassword = '';
         $this->confirmPassword = '';
 
-        $this->mensaje = 'Contraseña actualizada exitosamente.';
+        $this->emit('notification', 'hecho', 'Contraseña actualizada exitosamente.');
         $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
     }
 }
