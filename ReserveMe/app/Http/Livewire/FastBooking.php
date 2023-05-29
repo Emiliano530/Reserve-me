@@ -7,6 +7,7 @@ use App\Models\Table;
 use Carbon\Carbon;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class FastBooking extends Component
 {
@@ -104,6 +105,7 @@ class FastBooking extends Component
                 // Por ejemplo, redireccionar a una página de éxito o mostrar un mensaje de confirmación
                 $this->emit('notification', 'hecho', '¡Reserva guardada exitosamente!');
                 $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
+                return redirect()->route('reservas');
             } else {
                 // Mostrar un mensaje de error indicando que no hay mesas disponibles
                 $this->emit('notification', 'error', 'No hay mesas disponibles para hacer la reserva.');

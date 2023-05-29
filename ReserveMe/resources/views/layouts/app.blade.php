@@ -24,7 +24,7 @@
     @livewireStyles
 </head>
 
-<body class="no-horizontal-scroll font-inria antialiased flex flex-col justify-between min-h-screen bg-indigo-950 bg-repeat z-10 scrollbar-w-0"
+<body class="no-horizontal-scroll text-white font-inria antialiased flex flex-col justify-between min-h-screen bg-indigo-950 bg-repeat z-10 scrollbar-w-0"
     style="background-image: url('{{ asset('img/pattern.svg') }}');">
     @livewire('navbar')
     @livewire('fast-booking')

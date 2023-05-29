@@ -23,9 +23,9 @@
                 @if ($option->id_category == $selectedCategory->id)
                     <div
                         class="relative flex flex-col items-center hover:rotate-1 cursor-pointer justify-center w-60 min-h-60 rounded-3xl">
-                        @if ($option->option_image)
+                        @if ($option->optionImage_url)
                             <img class="w-full h-64 rounded-3xl object-cover"
-                                src="data:image/jpeg;base64,{{ base64_encode($option->option_image) }}"
+                                src="{{ $option->option_image }}"
                                 alt="Option Image" />
                         @else
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -57,12 +57,14 @@
             @foreach ($categories as $key => $category)
                 <div wire:click="selectCategory({{ $category->id }})"
                     class="relative flex items-center bg-slate-600 justify-center hover:rotate-1 cursor-pointer p-5 rounded-3xl flex-grow
+                @if (count($categories) == 5)
                 {{ $key % 5 === 0 ? 'row-span-6 min-h-[20vw] min-w-[10vw]' : '' }}
                 {{ $key % 5 === 1 ? 'col-span-3 row-span-3' : '' }}
                 {{ $key % 5 === 2 ? 'col-span-1 row-span-3' : '' }}
                 {{ $key % 5 === 3 ? 'col-span-1 row-span-3' : '' }}
                 {{ $key % 5 === 4 ? 'row-span-3 col-span-3' : '' }}"
-                    style="background-image: url('data:image/jpeg;base64,{{ base64_encode($category->category_photo) }}');
+                @endif
+                    style="background-image: url('{{$category->categoryPhoto_url }}');
                         background-position: center;
                         background-size: cover;">
                     <div class="absolute rounded-3xl inset-0 bg-black opacity-40"></div>

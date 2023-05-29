@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('id_area')
                 ->constrained('areas')
                 ->cascadeOnUpdate();
+            $table->string('table_url')->nullable();
             $table->timestamps();
         });
     }
