@@ -22,10 +22,9 @@ return new class extends Migration
             $table->foreignId('id_category')
                 ->constrained('categories')
                 ->cascadeOnUpdate();
-            $table->binary('option_image')->nullable();
+            $table->string('optioImage_url')->nullable();
             $table->timestamps();
         });
-        DB::statement('ALTER TABLE options MODIFY option_image LONGBLOB');
     }
 
     /** 
