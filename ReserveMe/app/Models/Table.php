@@ -13,4 +13,6 @@ class Table extends Model
     {
         return $this->belongsTo(Area::class, 'id_area');
     }
+
+    protected $fillable = ['table_number', 'id_area'];
 }

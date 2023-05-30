@@ -30,3 +30,7 @@ Route::get('/menu', function () {
 Route::get('/actualizar-perfil', function () {
     return view('reserve.actualizar-perfil');
 })->name('actualizar-perfil');
+
+Route::get('/reservas', function () {
+    return view('reserve.mis-reservas');
+})->name('reservas');
