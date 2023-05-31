@@ -10,6 +10,8 @@ class Reservas extends Component
 {
     public $reservasPendientes;
     public $reservasHistorial;
+
+    
     public function mount()
     {
         $user = Auth::user();
@@ -43,7 +45,7 @@ class Reservas extends Component
         $reserva = Reservation::where('id', $id)->first();
         $reserva->reservation_status = 'cancelada';
         $reserva->save();
-        $this->emit('confirm', '!Cancelada!', 'Tu reserva ha sido cancelada');
+        $this->emit('confirmCancel', 'Lamentamos que hayas cancelado', '¿Podrias contarnos el motivo?');
         $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
     }
 
@@ -62,7 +64,5 @@ class Reservas extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
         }
     }
-
-    // Escucha el evento 'actualizarColumna'
     protected $listeners = ['actualizarColumna','eliminarReserva'];
 }

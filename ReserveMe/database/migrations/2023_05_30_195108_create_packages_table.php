@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tables', function (Blueprint $table) {
+        Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->integer('table_number');
-            $table->integer('guestNumber');
-            $table->foreignId('id_area')
-                ->constrained('areas')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-            $table->string('table_url')->nullable();
+            $table->string('package_name');
+            $table->text('description');
+            $table->text('options');
+            $table->float('priceXguest');
+            $table->string('packageImage_url')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tables');
+        Schema::dropIfExists('packages');
     }
 };

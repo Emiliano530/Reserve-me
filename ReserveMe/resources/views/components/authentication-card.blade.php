@@ -1,4 +1,4 @@
-<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-indigo-950 bg-repeat"
+<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-indigo-950 bg-repeat"
     style="background-image: url('{{ asset('img/login_bg.svg') }}');">
 
 

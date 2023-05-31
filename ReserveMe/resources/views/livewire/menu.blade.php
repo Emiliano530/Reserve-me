@@ -24,8 +24,7 @@
                     <div
                         class="relative flex flex-col items-center hover:rotate-1 cursor-pointer justify-center w-60 min-h-60 rounded-3xl">
                         @if ($option->optionImage_url)
-                            <img class="w-full h-64 rounded-3xl object-cover"
-                                src="{{ $option->option_image }}"
+                            <img class="w-full h-64 rounded-3xl object-cover" src="{{ $option->option_image }}"
                                 alt="Option Image" />
                         @else
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -35,16 +34,15 @@
                             </svg>
                         @endif
                         <div class="absolute rounded-3xl inset-0 bg-black opacity-40"></div>
-                        <div class="absolute font-tiza w-44 h-44 text-3xl p-5 mt-2 flex justify-center items-center text-center overflow-hidden">
-                            <span class="rounded-3xl bg-black/60 p-3">{{ $option->option_name }}</span>
-                        </div>                        
-            
-                        <div class="absolute flex justify-center h-28 w-28 items-center px-5 py-auto text-center text-lg font-bold -top-10 -right-10 bg-center bg-cover text-black"
-     style="background-image: url('{{ asset('img/price.svg') }}');">
-    ${{ $option->price }}
-</div>
+                        <div
+                            class="absolute font-tiza max-w-full max-h-64 text-3xl p-5 mt-2 flex justify-center items-center text-center overflow-hidden">
+                            <span class="rounded-3xl break-words bg-black/60 p-3">{{ $option->option_name }}</span>
+                        </div>
 
-                        
+                        <div class="absolute flex justify-center h-28 w-28 items-center px-5 py-auto text-center text-lg font-bold -top-10 -right-10 bg-center bg-cover text-black"
+                            style="background-image: url('{{ asset('img/price.svg') }}');">
+                            ${{ $option->price }}
+                        </div>
                     </div>
                 @endif
             @endforeach
@@ -57,18 +55,16 @@
             @foreach ($categories as $key => $category)
                 <div wire:click="selectCategory({{ $category->id }})"
                     class="relative flex items-center bg-slate-600 justify-center hover:rotate-1 cursor-pointer p-5 rounded-3xl flex-grow
-                @if (count($categories) == 5)
-                {{ $key % 5 === 0 ? 'row-span-6 min-h-[20vw] min-w-[10vw]' : '' }}
+                @if (count($categories) == 5) {{ $key % 5 === 0 ? 'row-span-6 min-h-[20vw] min-w-[10vw]' : '' }}
                 {{ $key % 5 === 1 ? 'col-span-3 row-span-3' : '' }}
                 {{ $key % 5 === 2 ? 'col-span-1 row-span-3' : '' }}
                 {{ $key % 5 === 3 ? 'col-span-1 row-span-3' : '' }}
-                {{ $key % 5 === 4 ? 'row-span-3 col-span-3' : '' }}"
-                @endif
-                    style="background-image: url('{{$category->categoryPhoto_url }}');
-                        background-position: center;
-                        background-size: cover;">
+                {{ $key % 5 === 4 ? 'row-span-3 col-span-3' : '' }}" @endif
+                    style="background-image:
+                    url('{{ $category->categoryPhoto_url }}'); background-position: center; background-size: cover;">
                     <div class="absolute rounded-3xl inset-0 bg-black opacity-40"></div>
-                    <span class="flex items-center justify-center relative z-10 text-5xl font-tiza rounded-3xl bg-black/60 p-3">{{ $category->category_name }}</span>
+                    <span
+                        class="flex items-center justify-center relative z-10 text-5xl font-tiza rounded-3xl bg-black/60 p-3">{{ $category->category_name }}</span>
                 </div>
             @endforeach
         </div>

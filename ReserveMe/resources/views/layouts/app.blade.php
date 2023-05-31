@@ -7,14 +7,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>ReserveMe</title>
-    <link rel="icon" type="image/png" href="{{ asset('img/dajohu.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/dajohu.png') }}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <link href="https://fonts.googleapis.com/css2?family=Inria+Serif&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="node_modules/swiper/swiper-bundle.min.css" />
 
 
     <!-- Scripts -->
@@ -24,20 +23,21 @@
     @livewireStyles
 </head>
 
-<body class="no-horizontal-scroll text-white font-inria antialiased flex flex-col justify-between min-h-screen bg-indigo-950 bg-repeat z-10 scrollbar-w-0"
+<body
+    class="no-horizontal-scroll font-inria antialiased flex flex-col justify-between min-h-screen bg-indigo-950 bg-repeat z-10 scrollbar-w-0"
     style="background-image: url('{{ asset('img/pattern.svg') }}');">
     @livewire('navbar')
     @livewire('fast-booking')
     <!-- Page Heading -->
     @if (isset($header))
-        <header class="bg-white dark:bg-gray-800 shadow">
+        <header class="bg-gray-800 shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 {{ $header }}
             </div>
         </header>
     @endif
 
-    
+
     <!-- Page Content -->
     <main class="py-16 flex-grow flex justify-center items-center">
         {{ $slot }}
@@ -45,13 +45,12 @@
     <x-footer />
     @stack('modals')
     @livewireScripts
-    <script src="node_modules/swiper/swiper-bundle.min.js"></script>
 </body>
 <style>
     .no-horizontal-scroll {
-        overflow-x: hidden; /* Oculta la barra de desplazamiento horizontal */
+        overflow-x: hidden;
+        /* Oculta la barra de desplazamiento horizontal */
     }
 </style>
+
 </html>
-
-

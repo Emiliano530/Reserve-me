@@ -13,7 +13,7 @@ class UpdateProfile extends Component
     use WithFileUploads;
 
     public $userId;
-    public $name;
+    public $name; 
     public $lastName;
     public $phone;
     public $birthday;

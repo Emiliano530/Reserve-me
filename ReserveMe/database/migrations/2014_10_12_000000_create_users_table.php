@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -16,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('lastName');
-            $table->string('email');
-            $table->string('password');
+            $table->string('email')->unique();
+            $table->string('password', 255);
             $table->string('phone')->nullable();
             $table->date('birthday')->nullable();
             $table->string('profileAvatar_url')->nullable();

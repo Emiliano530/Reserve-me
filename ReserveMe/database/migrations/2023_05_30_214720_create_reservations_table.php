@@ -20,12 +20,19 @@ return new class extends Migration
             $table->string('associated_event')->nullable();
             $table->text('extras')->nullable();
             $table->string('payment_status');
+            $table->foreignId('id_package')
+                ->nullable()
+                ->constrained('packages')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->foreignId('id_table')
                 ->constrained('tables')
-                ->cascadeOnUpdate();
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->foreignId('id_user')
                 ->constrained('users')
-                ->cascadeOnUpdate();
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

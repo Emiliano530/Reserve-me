@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use App\Models\Table;
 use Carbon\Carbon;
 use Livewire\Component;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -103,9 +104,8 @@ class FastBooking extends Component
 
                 // Redireccionar o realizar alguna otra acción después de guardar la reserva
                 // Por ejemplo, redireccionar a una página de éxito o mostrar un mensaje de confirmación
-                $this->emit('notification', 'hecho', '¡Reserva guardada exitosamente!');
-                $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
-                return redirect()->route('reservas');
+                $this->emit('guardado', 'hecho', '¡Reserva guardada exitosamente!');
+                $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 200]);
             } else {
                 // Mostrar un mensaje de error indicando que no hay mesas disponibles
                 $this->emit('notification', 'error', 'No hay mesas disponibles para hacer la reserva.');
@@ -144,4 +144,13 @@ class FastBooking extends Component
             $this->hora = $mexicoTime;
         }
     }
+
+    public function redireccionar()
+    {
+        if (!request()->routeIs('reservas')) {
+            return redirect()->route('reservas'); ////aqui estpy checando que no redirija
+        }
+    }
+
+    protected $listeners = ['redireccionar'];
 }

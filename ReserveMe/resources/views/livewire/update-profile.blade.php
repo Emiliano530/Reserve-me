@@ -5,7 +5,7 @@
             @if ($profileAvatar)
                 <img class="w-full h-full rounded-full object-cover" src="{{ asset($profileAvatar) }}"
                     alt="Profile Avatar">
-            @else
+            @else 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-full h-full rounded-full bg-indigo-900 stroke-white">
                     <path stroke-linecap="round" stroke-linejoin="round"

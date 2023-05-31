@@ -4,7 +4,7 @@
             <!-- burger menu-->
             <div class="flex absolute items-center m-1">
                 <button @click="open = !open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-400 hover:bg-gray-900 focus:outline-none focus:bg-gray-900 focus:text-gray-400 transition duration-150 ease-in-out">
                     <svg class="h-10 w-10 stroke-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -42,7 +42,7 @@
                                             </svg>
                                         @endif
                                         <button type="button"
-                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-white bg-white dark:bg-transparent hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-900 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
+                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:text-gray-300 focus:outline-none focus:bg-gray-900 active:bg-gray-700 transition ease-in-out duration-150">
                                             {{ $user->name }}
 
                                             <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +71,7 @@
                                         </x-dropdown-link>
                                     @endif
 
-                                    <div class="border-t border-gray-200 dark:border-gray-600"></div>
+                                    <div class="border-t border-gray-600"></div>
 
                                     <!-- Authentication -->
                                     <form method="POST" action="{{ route('logout') }}" x-data>
@@ -106,7 +106,7 @@
             style="background-image: url('{{ asset('img/pattern_green.svg') }}');">
             <div class="flex absolute items-center m-1">
                 <button @click="open = !open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-400 hover:bg-gray-900 focus:outline-none focus:bg-gray-900 focus:text-gray-400 transition duration-150 ease-in-out">
                     <svg class="h-10 w-10 stroke-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -121,12 +121,12 @@
                     class="border-b-4 border-transparent {{ request()->is('dashboard') || request()->is('/') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Inicio</a>
                 <a @click="open = false" href="{{ route('menu') }}"
                     class="border-b-4 border-transparent {{ request()->is('menu') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Menu</a>
+                <a @click="open = false" href="{{ route('recomendaciones') }}"
+                    class="border-b-4 border-transparent {{ request()->is('recomendaciones') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Recomendaciones</a>
                 @auth
                     <a @click="open = false" href="{{ route('reservas') }}"
                         class="border-b-4 border-transparent {{ request()->is('reservas') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Reservas</a>
                 @endauth
-                <a @click="open = false" href="{{ route('dashboard') }}"
-                    class="border-b-4 border-transparent {{ request()->is('dashboard') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Inicio</a>
             </div>
 
         </div>
@@ -160,5 +160,14 @@
         observer.observe(overlay, {
             attributes: true
         });
+    });
+
+    // Obtener el botón de cerrar sesión por su clase o ID
+    const logoutButton = document.querySelector('.dropdown-link-logout');
+
+    // Escuchar el evento click del botón de cerrar sesión
+    logoutButton.addEventListener('click', function() {
+        // Redirigir al usuario al dashboard
+        window.location.href = '{{ route('dashboard') }}';
     });
 </script>

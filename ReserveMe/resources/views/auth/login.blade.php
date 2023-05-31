@@ -13,7 +13,7 @@
         <x-validation-errors class="mb-4" />
 
         @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+            <div class="mb-4 font-medium text-sm text-green-400">
                 {{ session('status') }}
             </div>
         @endif
@@ -64,7 +64,7 @@
                     </x-primary-button>
                 </div>
                 @if (Route::has('password.request'))
-                    <a class="underline mt-5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                    <a class="underline mt-5 text-sm text-gray-400 hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-800"
                         href="{{ route('password.request') }}">
                         {{ __('¿Olvidaste tu contraseña?') }}
                     </a>

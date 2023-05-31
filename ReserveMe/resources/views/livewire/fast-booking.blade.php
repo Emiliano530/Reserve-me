@@ -1,6 +1,7 @@
-<div x-cloak x-data="{open: false, hideBody: false, hideDelay: 1000, hideTimeout: null }" class="fastbooking fixed bottom-0 right-5 z-40 text-white">
-    <div :class="{ 'h-[18vw]': open, 'h-[2.9vw]': !open }" class="container p-2 overflow-hidden transition-all duration-1000">
-        <div @click="open = !open; hideBody = false;" 
+<div x-cloak x-data="{ open: false, hideBody: false, hideDelay: 1000, hideTimeout: null }" class="fastbooking fixed bottom-0 right-5 z-40 text-white">
+    <div :class="{ 'h-[18vw]': open, 'h-[2.9vw]': !open }"
+        class="container p-2 overflow-hidden transition-all duration-1000">
+        <div @click="open = !open; hideBody = false;"
             class="flex gap-2 cursor-pointer justify-center p-5 h-[2.9vw] items-center bg-emerald-600 rounded-t-3xl flex-shrink-0 border-2 border-black border-b-0">
             <div class="text-xl whitespace-nowrap">Haz una reservación</div>
             <svg class="h-6 w-6 stroke-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -10,7 +11,7 @@
                     stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
             </svg>
         </div>
-        <div :class="{ '': !hideBody, 'hidden': hideBody }" 
+        <div :class="{ '': !hideBody, 'hidden': hideBody }"
             class="cuerpo flex flex-col h-[14.6vw] gap-2 overflow-hidden justify-center items-center bg-blue-800 rounded-b-3xl border-2 border-black p-4">
             <div class="flex gap-2 items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -34,17 +35,20 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-12 h-12">
                     <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <x-input wire:model="cantidad_personas" class="h-8 text-black w-36" type="number" title="Cantidad de personas" />
+                <x-input wire:model="cantidad_personas" class="h-8 text-black w-36" type="number"
+                    title="Cantidad de personas" />
             </div>
-            <x-button wire:click="MakeReservation" @click="open = !open; clearTimeout(hideTimeout); hideTimeout = setTimeout(() => hideBody = true, hideDelay)" class="mt-2">Reservar</x-button>
+            <x-button wire:click="MakeReservation"
+                @click="open = !open; clearTimeout(hideTimeout); hideTimeout = setTimeout(() => hideBody = true, hideDelay)"
+                class="mt-2">Reservar</x-button>
         </div>
     </div>
 </div>
 <script>
-    document.addEventListener('livewire:load', function () {
-        Livewire.on('notification', function (type, message) {
+    document.addEventListener('livewire:load', function() {
+        Livewire.on('notification', function(type, message) {
             var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
             var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
             Swal.fire({
@@ -55,6 +59,19 @@
                 showConfirmButton: false
             })
         });
+        Livewire.on('guardado', function(type, message) {
+            var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
+            var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
+            Swal.fire({
+                title: type,
+                text: message,
+                icon: icon,
+                timer: timer, // Tiempo en milisegundos
+                showConfirmButton: false
+            }).then((result) => {
+                Livewire.emit('redireccionar');
+            })
+        });
 
         function getIconByType(type) {
             // Asignar el icono correspondiente según el tipo de mensaje
@@ -63,7 +80,7 @@
                     return 'error';
                 case 'hecho':
                     return 'success';
-                // Agregar más casos según sea necesario
+                    // Agregar más casos según sea necesario
                 default:
                     return 'info';
             }
@@ -74,7 +91,7 @@
             switch (type) {
                 case 'error':
                     return 3000; // 2 segundos
-                // Agregar más casos según sea necesario
+                    // Agregar más casos según sea necesario
                 default:
                     return 1500; // 1.5 segundos (valor predeterminado)
             }

@@ -1,10 +1,12 @@
-<div x-cloak x-data="{ reservas: true, historial: false }" class="flex flex-col gap-5">
+<div x-cloak x-data="{ reservas: true, historial: false }" class="flex flex-col gap-5 text-white">
     <div class="flex gap-2">
         <div @click="reservas = true, historial = true"
-            class="text-center rounded-lg hover:bg-emerald-600 bg-emerald-700 cursor-pointer w-40 text-xl">Expandir todo
+            class="flex items-center justify-center text-base text-center rounded-lg hover:bg-emerald-600 bg-emerald-700 cursor-pointer px-2">
+            Expandir todo
         </div>
         <div @click="reservas = false, historial = false"
-            class="text-center rounded-lg hover:bg-emerald-600 bg-emerald-700 cursor-pointer w-40 text-xl">Colapsar todo
+            class="flex items-center justify-center text-base text-center rounded-lg hover:bg-emerald-600 bg-emerald-700 cursor-pointer px-2">
+            Colapsar todo
         </div>
     </div>
     <div :class="{ 'max-h-[90vw]': reservas, 'max-h-[3vw]': !reservas }"
@@ -26,23 +28,23 @@
             @else
                 <div class="flex flex-col w-[50vw] space-y-2 text-lg font-bold">
                     <div class="flex gap-4 bg-indigo-600 rounded-3xl rounded-tr-3xl">
-                        <div class="p-3 text-center w-1/5">Personas</div>
-                        <div class="p-3 text-center w-2/5">Fecha y hora</div>
-                        <div class="p-3 text-center w-1/5">Evento</div>
-                        <div class="p-3 text-center w-1/5">Estado</div>
-                        <div class="p-3 text-center w-1/5">Acciones</div>
+                        <div class="p-1 text-center w-1/5">Personas</div>
+                        <div class="p-1 text-center w-2/5">Fecha y hora</div>
+                        <div class="p-1 text-center w-1/5">Evento</div>
+                        <div class="p-1 text-center w-1/5">Estado</div>
+                        <div class="p-1 text-center w-1/5">Acciones</div>
                     </div>
                     @foreach ($reservasPendientes as $reservacion)
                         <div
                             class="flex gap-4 {{ $loop->iteration % 2 === 0 ? 'bg-blue-300' : 'bg-gray-300' }} text-black rounded-3xl">
-                            <div class="p-3 text-center w-1/5">{{ $reservacion->guest_number }}</div>
-                            <div class="p-3 text-center w-2/5">{{ $reservacion->reservation_datetime }}</div>
-                            <div class="p-3 text-center w-1/5">{{ $reservacion->associated_event }}</div>
-                            <div class="p-3 text-center w-1/5">
+                            <div class="p-1 text-center w-1/5">{{ $reservacion->guest_number }}</div>
+                            <div class="p-1 text-center w-2/5">{{ $reservacion->reservation_datetime }}</div>
+                            <div class="p-1 text-center w-1/5">{{ $reservacion->associated_event }}</div>
+                            <div class="p-1 text-center w-1/5">
                                 <span
-                                    class="bg-gray-600 p-2 rounded-3xl text-white">{{ $reservacion->reservation_status }}</span>
+                                    class="bg-gray-600 px-2 py-1 rounded-3xl text-white">{{ $reservacion->reservation_status }}</span>
                             </div>
-                            <div class="flex gap-5 justify-center items-center p-3 text-center w-1/5">
+                            <div class="flex gap-3 justify-center items-center p-1 text-center w-1/5">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor"
                                     class="w-6 h-6 stroke-emerald-600 hover:stroke-emerald-800 cursor-pointer">
@@ -54,9 +56,11 @@
                                     wire:click="confirmarActualizarColumna({{ $reservacion->id }})"
                                     class="w-6 h-6 stroke-red-600 hover:stroke-red-800 cursor-pointer">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                        d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
+
                             </div>
+
                         </div>
                     @endforeach
                 </div>
@@ -81,23 +85,23 @@
             @else
                 <div class="flex flex-col w-[50vw] space-y-2 text-lg font-bold">
                     <div class="flex gap-4 bg-indigo-600 rounded-3xl rounded-tr-3xl">
-                        <div class="p-3 text-center w-1/5">Personas</div>
-                        <div class="p-3 text-center w-2/5">Fecha y hora</div>
-                        <div class="p-3 text-center w-1/5">Evento</div>
-                        <div class="p-3 text-center w-1/5">Estado</div>
-                        <div class="p-3 text-center w-1/5">Acciones</div>
+                        <div class="p-1 text-center w-1/5">Personas</div>
+                        <div class="p-1 text-center w-2/5">Fecha y hora</div>
+                        <div class="p-1 text-center w-1/5">Evento</div>
+                        <div class="p-1 text-center w-1/5">Estado</div>
+                        <div class="p-1 text-center w-1/5">Acciones</div>
                     </div>
                     @foreach ($reservasHistorial as $reservacion)
                         <div
                             class="flex gap-4 {{ $loop->iteration % 2 === 0 ? 'bg-blue-300' : 'bg-gray-300' }} text-black rounded-3xl">
-                            <div class="p-3 text-center w-1/5">{{ $reservacion->guest_number }}</div>
-                            <div class="p-3 text-center w-2/5">{{ $reservacion->reservation_datetime }}</div>
-                            <div class="p-3 text-center w-1/5">{{ $reservacion->associated_event }}</div>
-                            <div class="p-3 text-center w-1/5"><span
-                                    class="{{ $reservacion->reservation_status === 'Cancelada' ? 'bg-emerald-600' : 'bg-red-600' }} p-2 rounded-3xl text-white">{{ $reservacion->reservation_status }}</span>
+                            <div class="p-1 text-center w-1/5">{{ $reservacion->guest_number }}</div>
+                            <div class="p-1 text-center w-2/5">{{ $reservacion->reservation_datetime }}</div>
+                            <div class="p-1 text-center w-1/5">{{ $reservacion->associated_event }}</div>
+                            <div class="p-1 text-center w-1/5"><span
+                                    class="{{ $reservacion->reservation_status === 'Cancelada' ? 'bg-emerald-600' : 'bg-red-600' }} px-2 py-1 rounded-3xl text-white">{{ $reservacion->reservation_status }}</span>
                             </div>
                             <div wire:click="confirmarEliminarReserva({{ $reservacion->id }})"
-                                class="flex gap-5 justify-center items-center p-3 text-center w-1/5 text-red-600 hover:text-red-700 cursor-pointer">
+                                class="flex gap-5 justify-center items-center p-1 text-center w-1/5 text-red-600 hover:text-red-700 cursor-pointer">
                                 Eliminar
                             </div>
                         </div>
@@ -142,11 +146,39 @@
             })
         });
         Livewire.on('confirm', function(title, message) {
-            Swal.fire(
-                title,
-                message,
-                'success'
-            )
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1000
+            })
         });
+        Livewire.on('confirmCancel', function(title, message) {
+            Swal.fire({
+                title: title,
+                text: message,
+                iconHtml: '<img src="{{ asset('img/apologize.svg') }}" class="custom-icon">',
+                showCancelButton: true,
+                showConfirmButton: true,
+                confirmButtonText: 'Enviar',
+                cancelButtonText: 'Continuar',
+                input: 'text',
+                inputPlaceholder: 'Opcional',
+                customClass: {
+                    icon: 'custom-icon',
+                },
+            });
+        });
+
     });
 </script>
+<style>
+    .custom-icon {
+    width: 150px; /* Ajusta el ancho de la imagen según tus necesidades */
+    height: auto; /* Mantén la relación de aspecto original */
+    border: 0; /* Elimina el borde circular */
+    padding: 0;
+}
+</style>
+

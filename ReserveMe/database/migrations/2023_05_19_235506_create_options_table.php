@@ -16,13 +16,14 @@ return new class extends Migration
             $table->id();
             $table->string('option_name');
             $table->text('description')->nullable();
-            $table->text('ingredients')->nullable();;
+            $table->text('ingredients')->nullable();
             $table->string('shift');
             $table->float('price');
             $table->foreignId('id_category')
                 ->constrained('categories')
-                ->cascadeOnUpdate();
-            $table->string('optioImage_url')->nullable();
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->string('optionImage_url')->nullable();
             $table->timestamps();
         });
     }

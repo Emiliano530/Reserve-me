@@ -34,3 +34,7 @@ Route::get('/actualizar-perfil', function () {
 Route::get('/reservas', function () {
     return view('reserve.mis-reservas');
 })->name('reservas');
+
+Route::get('/recomendaciones', function () {
+    return view('reserve.recomendaciones');
+})->name('recomendaciones');

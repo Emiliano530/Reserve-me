@@ -16,7 +16,7 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
                 inria: ['Inria Serif', 'sans-serif'],
-                tiza: ['"Special Elite"', 'sans-serif'],
+                tiza: ['Special Elite', 'sans-serif'],
                 //para agregar una fuente de google, solo pon aqui la fuente y en el app poner el stylesheet
             },
             colors: {
