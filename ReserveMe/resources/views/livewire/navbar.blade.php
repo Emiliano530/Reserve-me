@@ -1,4 +1,4 @@
-<div x-cloak x-data="{ open: false }" :class="{ 'fixed inset-0 h-full z-50': open, 'z-50': !open }">
+<div x-cloak x-data="{ open: false }" :class="{ 'fixed inset-0 h-full z-40': open, 'z-40': !open }">
     <nav class="fixed w-full top-0 bg-black border-b border-gray-800">
         <div class="flex justify-between items-center h-16">
             <!-- burger menu-->

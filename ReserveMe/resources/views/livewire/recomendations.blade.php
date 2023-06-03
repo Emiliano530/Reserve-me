@@ -1,4 +1,4 @@
-<div x-cloak x-data="{ mostrar: false }" class="flex flex-col items-center justify-center">
+<div x-cloak x-data="{ mostrar: false, reserva: false }" class="flex mt-10 flex-col items-center justify-center">
     <div class="filtro flex justify-center items-center bg-yellow-900 my-5 rounded-3xl h-20 w-[50vw]">
         <div class="flex items-center justify-center h-full w-full">
             <div class="flex justify-center items-center p-4">
@@ -28,7 +28,8 @@
                 <x-input class="h-8 text-black w-36" type="number" title="Cantidad de personas" />
             </div>
         </div>
-        <button class="flex items-center justify-center rounded-r-3xl bg-emerald-600 h-full right-0 p-5">
+        <button wire:click="sendFilter"
+            class="flex items-center justify-center rounded-r-3xl bg-emerald-600 h-full right-0 p-5">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-10 h-10 stroke-white">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -40,7 +41,7 @@
         <div class="flex justify-center items-center p-2 w-full">
             <div class="flex gap-5 text-white p-10">
                 @foreach ($visiblepackages as $item)
-                    <div @click="mostrar = !mostrar" wire:click="showData({{ $item->id }})"
+                    <div @click="mostrar = !mostrar , reserva=!reserva" wire:click="showData({{ $item->id }})"
                         class="card cursor-pointer hover:rotate-1 flex flex-col justify-center bg-black rounded-3xl items-center w-96 min-h-80">
                         <div class="h-full w-full">
                             <div class="flex items-center justify-center h-56">
@@ -66,6 +67,7 @@
                 stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
+
         </button>
         <button
             class="absolute next-button top-0 right-0 z-30 flex items-center justify-center h-full px-2 focus:outline-none"
@@ -76,12 +78,96 @@
             </svg>
         </button>
     </div>
-    @if ($package)
-        <div :class="{ '': mostrar, 'hidden': !mostrar }"
-            class="overlay overflow-hidden no- fixed inset-0 z-50 flex justify-center items-center bg-black/60">
-            <span class="text-white">{{ $package->package_name }}</span>
+
+    <div :class="{ 'datos': mostrar, 'hidden': !mostrar }"
+        class="overlay mostrar overflow-hidden fixed inset-0 z-40 flex flex-col justify-center items-center bg-black/80">
+        <div :class="{ '': reserva, 'hidden': !reserva }"
+            class="modal relative z-50 flex gap-2 items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-600 to-indigo-600  min-w-[50vw] min-h-[20vw]">
+            <span wire:loading class="text-white">Cargando..</span>
+            @if ($package)
+                <img wire:loading.remove class="absolute w-60 min-h-[20vw] left-0 rounded-r-full object-cover"
+                    src="{{ asset($package->packageImage_url) }}" alt="image">
+                <div class="absolute w-[32vw] min-h-[18vw] left-60 text-white flex flex-col items-center">
+                    <div class="text-3xl font-bold p-2 border-b-2 mb-1 border-b-white">{{ $package->package_name }}
+                    </div>
+                    <div class="p-2">{{ $package->description }}</div>
+                    <div class="font-bold p-2">Este paquete contiene:</div>
+                    @if (count($package->options) > 4)
+                        <ul class="text-white list-disc list-inside grid grid-cols-2 gap-2">
+                            @foreach ($package->options as $option)
+                                <li class="">{{ $option }}</li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <ul class="text-white list-disc list-inside">
+                            @foreach ($package->options as $option)
+                                <li class="">{{ $option }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                    <span class="absolute bottom-0 right-0 text-white mt-5 p-5 break-words">Precio por persona:
+                        ${{ $package->priceXguest }}</span>
+                </div>
+            @endif
+
+
+
+
+            <div class="absolute p-4 top-0 right-0" @click="mostrar = !mostrar" wire:click="clearPackage">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-10 h-10 stroke-white hover:stroke-red-600 cursor-pointer">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </div>
         </div>
-    @endif
+        <button :class="{ '': reserva, 'hidden': !reserva }" @click="reserva=!reserva"
+            class="hover:scale-105 transition-all bg-gradient-to-r from-blue-500 to-violet-500 hover:bg-gradient-to-r hover:from-violet-500 hover:to-blue-500 py-4 px-2 font-bold text-xl text-white z-40 rounded-full mt-5"><span
+                class="border-4 px-4 py-2 w-full rounded-full border-white">Reservar con este paquete</span></button>
+        <div :class="{ 'hidden': reserva, '': !reserva }"
+            class="modal relative z-50 flex flex-col gap-2 p-10 justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-600 to-indigo-600  min-w-[25vw] min-h-[30vw]">
+            <x-label for="personas">Cantidad de personas:</x-label>
+            <x-input id="personas" placeholder="cantidad de personas" type="number"/>
+            <x-label for="fecha">Fecha:</x-label>
+            <x-input id="fecha" placeholder="fecha" type="date"/>
+            <x-label for="hora">Hora:</x-label>
+            <x-input id="hora" placeholder="hora" type="time"/>
+            <x-label for="referencia">Nombre de referencia:</x-label>
+            <x-input id="referencia" placeholder="nombre de referencia" type="text"/>
+            <x-label for="evento">Evento asociado</x-label>
+            <x-input id="evento" placeholder="opcional" type="text"/>
+            <div class="absolute p-4 top-0 right-0" @click="mostrar = !mostrar" wire:click="clearPackage">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-10 h-10 stroke-white hover:stroke-red-600 cursor-pointer">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </div>
+        </div>
+    </div>
 </div>
+<style>
+    body {
+        overflow: auto;
+    }
 
+    body.overlay-active {
+        overflow: hidden;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const overlay = document.querySelector('.mostrar');
 
+        // Observar cambios en la clase del overlay
+        const observer = new MutationObserver(function(mutationsList, observer) {
+            const isOpen = overlay.classList.contains('datos');
+
+            // Agregar o eliminar la clase 'overlay-active' en el body según el estado del overlay
+            document.body.classList.toggle('overlay-active', isOpen);
+        });
+
+        // Observar cambios en los atributos del overlay
+        observer.observe(overlay, {
+            attributes: true
+        });
+    });
+</script>

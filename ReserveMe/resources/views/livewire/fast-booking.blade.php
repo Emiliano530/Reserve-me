@@ -1,4 +1,4 @@
-<div x-cloak x-data="{ open: false, hideBody: false, hideDelay: 1000, hideTimeout: null }" class="fastbooking fixed bottom-0 right-5 z-40 text-white">
+<div x-cloak x-data="{ open: false, hideBody: false, hideDelay: 1000, hideTimeout: null }" class="fastbooking fixed bottom-0 right-5 z-30 text-white">
     <div :class="{ 'h-[18vw]': open, 'h-[2.9vw]': !open }"
         class="container p-2 overflow-hidden transition-all duration-1000">
         <div @click="open = !open; hideBody = false;"

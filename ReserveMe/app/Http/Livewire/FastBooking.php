@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Reservation;
+use App\Models\Package;
+use App\Models\Reservation; 
 use App\Models\Table;
 use Carbon\Carbon;
 use Livewire\Component;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 

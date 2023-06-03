@@ -123,7 +123,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sí, cancelar',
                 cancelButtonText: 'No, mantener',
-            }).then((result) => {
+            }).then((result) => { 
                 if (result.isConfirmed) {
                     Livewire.emit('actualizarColumna', id);
                 }

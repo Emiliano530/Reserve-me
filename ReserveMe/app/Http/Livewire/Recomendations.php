@@ -16,6 +16,7 @@ class Recomendations extends Component
     public function mount()
     {
         $this->packages = Package::all();
+
         $this->updateVisiblepackages();
     }
 
@@ -50,8 +51,17 @@ class Recomendations extends Component
     public function showData($id)
     {
         $this->package = Package::findOrFail($id);
+        $this->dispatchBrowserEvent('show-overlay');
     }
-    
+    public function clearPackage()
+    {
+        $this->package = null;
+    }
+
+    public function sendFilter()
+    {
+    }
+
     public function render()
     {
         return view('livewire.recomendations');
