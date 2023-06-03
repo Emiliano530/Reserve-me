@@ -109,10 +109,7 @@
                         ${{ $package->priceXguest }}</span>
                 </div>
             @endif
-
-
-
-
+            <!--close-->
             <div class="absolute p-4 top-0 right-0" @click="mostrar = !mostrar" wire:click="clearPackage">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-10 h-10 stroke-white hover:stroke-red-600 cursor-pointer">
@@ -125,16 +122,62 @@
                 class="border-4 px-4 py-2 w-full rounded-full border-white">Reservar con este paquete</span></button>
         <div :class="{ 'hidden': reserva, '': !reserva }"
             class="modal relative z-50 flex flex-col gap-2 p-10 justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-600 to-indigo-600  min-w-[25vw] min-h-[30vw]">
-            <x-label for="personas">Cantidad de personas:</x-label>
-            <x-input id="personas" placeholder="cantidad de personas" type="number"/>
-            <x-label for="fecha">Fecha:</x-label>
-            <x-input id="fecha" placeholder="fecha" type="date"/>
-            <x-label for="hora">Hora:</x-label>
-            <x-input id="hora" placeholder="hora" type="time"/>
-            <x-label for="referencia">Nombre de referencia:</x-label>
-            <x-input id="referencia" placeholder="nombre de referencia" type="text"/>
-            <x-label for="evento">Evento asociado</x-label>
-            <x-input id="evento" placeholder="opcional" type="text"/>
+            <div class="flex justify-center items-center pb-5 border-b mb-2 border-b-white">
+                <x-dajohu-reserve />
+            </div>
+            <!--input 1-->
+            <x-label class="font-bold" for="personas">Cantidad de personas:</x-label>
+            <x-input-icon wire:model="personas" class="w-96 text-center" id="personas" placeholder="cantidad de personas" type="number">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="black" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                </svg>
+            </x-input-icon>
+            <!--input 2-->
+            <x-label class="font-bold  mt-2" for="fecha">Fecha:</x-label>
+            <x-input-icon wire:model="fecha" class="w-96 text-center" id="fecha" value="{{ date('Y-m-d') }}" placeholder="fecha"
+                type="date">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="black" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                </svg>
+            </x-input-icon>
+            <!--input 3-->
+            <x-label class="font-bold  mt-2" for="hora">Hora:</x-label>
+            <x-input-icon wire:model="hora" class="w-96 text-center" id="hora" value="{{ date('H:i') }}" placeholder="hora"
+                type="time">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="black" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </x-input-icon>
+            <!--input 4-->
+            <x-label class="font-bold  mt-2" for="referencia">Nombre de referencia:</x-label>
+            <x-input-icon wire:model="referencia" class="w-96 text-center" id="referencia" placeholder="nombre de referencia" type="text">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="black" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+            </x-input-icon>
+            <!--input 5-->
+            <x-label class="font-bold  mt-2" for="evento">Evento asociado</x-label>
+            <x-input-icon wire:model="evento" class="w-96 text-center" id="evento" placeholder="opcional" type="text">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="black" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.87c1.355 0 2.697.055 4.024.165C17.155 8.51 18 9.473 18 10.608v2.513m-3-4.87v-1.5m-6 1.5v-1.5m12 9.75l-1.5.75a3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0L3 16.5m15-3.38a48.474 48.474 0 00-6-.37c-2.032 0-4.034.125-6 .37m12 0c.39.049.777.102 1.163.16 1.07.16 1.837 1.094 1.837 2.175v5.17c0 .62-.504 1.124-1.125 1.124H4.125A1.125 1.125 0 013 20.625v-5.17c0-1.08.768-2.014 1.837-2.174A47.78 47.78 0 016 13.12M12.265 3.11a.375.375 0 11-.53 0L12 2.845l.265.265zm-3 0a.375.375 0 11-.53 0L9 2.845l.265.265zm6 0a.375.375 0 11-.53 0L15 2.845l.265.265z" />
+                </svg>
+            </x-input-icon>
+
+            <div class="flex justify-center items-center gap-2 mt-5">
+                <x-button wire:click="MakeReservation" class="text-xl">Reservar</x-button>
+                <x-secondary-button class="text-2xl" @click="mostrar = !mostrar" wire:click="clearPackage">Cancelar</x-secondary-button>
+            </div>
+            <!--close-->
             <div class="absolute p-4 top-0 right-0" @click="mostrar = !mostrar" wire:click="clearPackage">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-10 h-10 stroke-white hover:stroke-red-600 cursor-pointer">
@@ -169,5 +212,56 @@
         observer.observe(overlay, {
             attributes: true
         });
+    });
+
+    document.addEventListener('livewire:load', function() {
+        Livewire.on('notification', function(type, message) {
+            var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
+            var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
+            Swal.fire({
+                title: type,
+                text: message,
+                icon: icon,
+                timer: timer, // Tiempo en milisegundos
+                showConfirmButton: false
+            })
+        });
+        Livewire.on('guardado', function(type, message) {
+            var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
+            var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
+            Swal.fire({
+                title: type,
+                text: message,
+                icon: icon,
+                timer: timer, // Tiempo en milisegundos
+                showConfirmButton: false
+            }).then((result) => {
+                Livewire.emit('redireccionar');
+            })
+        });
+
+        function getIconByType(type) {
+            // Asignar el icono correspondiente según el tipo de mensaje
+            switch (type) {
+                case 'error':
+                    return 'error';
+                case 'hecho':
+                    return 'success';
+                    // Agregar más casos según sea necesario
+                default:
+                    return 'info';
+            }
+        }
+
+        function getTimerByType(type) {
+            // Asignar el temporizador correspondiente según el tipo de mensaje
+            switch (type) {
+                case 'error':
+                    return 3000; // 2 segundos
+                    // Agregar más casos según sea necesario
+                default:
+                    return 1500; // 1.5 segundos (valor predeterminado)
+            }
+        }
     });
 </script>

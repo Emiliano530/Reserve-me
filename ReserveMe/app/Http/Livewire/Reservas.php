@@ -11,9 +11,16 @@ class Reservas extends Component
     public $reservasPendientes;
     public $reservasHistorial;
 
-    
+
     public function mount()
     {
+        if (session()->has('save_reserve')) {
+            $this->emit('guardado', 'hecho', '¡Reserva guardada exitosamente!');
+            $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 200]);
+            // Eliminar los datos de reserva de la sesión
+            session()->forget('save_reserve');
+        }
+
         $user = Auth::user();
         $reservaciones = Reservation::where('id_user', $user->id)->get();
 
@@ -64,5 +71,10 @@ class Reservas extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
         }
     }
-    protected $listeners = ['actualizarColumna','eliminarReserva'];
+    public function guardado()
+    {
+        $this->emit('guardado', 'hecho', '¡Reserva guardada exitosamente!');
+        $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 200]);
+    }
+    protected $listeners = ['actualizarColumna', 'eliminarReserva', 'guardado'];
 }

@@ -170,4 +170,6 @@
         // Redirigir al usuario al dashboard
         window.location.href = '{{ route('dashboard') }}';
     });
+
+    
 </script>

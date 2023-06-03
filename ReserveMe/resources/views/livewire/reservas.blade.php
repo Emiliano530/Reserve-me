@@ -171,6 +171,44 @@
             });
         });
 
+        Livewire.on('guardado', function(type, message) {
+            var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
+            var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
+            Swal.fire({
+                title: type,
+                text: message,
+                icon: icon,
+                timer: timer, // Tiempo en milisegundos
+                showConfirmButton: false
+            }).then((result) => {
+                Livewire.emit('redireccionar');
+            })
+        });
+
+        function getIconByType(type) {
+            // Asignar el icono correspondiente según el tipo de mensaje
+            switch (type) {
+                case 'error':
+                    return 'error';
+                case 'hecho':
+                    return 'success';
+                    // Agregar más casos según sea necesario
+                default:
+                    return 'info';
+            }
+        }
+
+        function getTimerByType(type) {
+            // Asignar el temporizador correspondiente según el tipo de mensaje
+            switch (type) {
+                case 'error':
+                    return 3000; // 2 segundos
+                    // Agregar más casos según sea necesario
+                default:
+                    return 1500; // 1.5 segundos (valor predeterminado)
+            }
+        }
+
     });
 </script>
 <style>

@@ -30,6 +30,13 @@ class FastBooking extends Component
     }
     public function MakeReservation()
     {
+        // Validar los datos de entrada
+        $this->validate([
+            'fecha' => 'required|date',
+            'hora' => 'required|date_format:H:i',
+            'cantidad_personas' => 'required|integer|min:1',
+        ]);
+        
         // Verificar si el usuario está autenticado
         if (!auth()->check()) {
             // Guardar los datos de reserva en la sesión
@@ -42,13 +49,6 @@ class FastBooking extends Component
             // Redirigir al usuario al inicio de sesión
             return redirect()->route('login');
         }
-
-        // Validar los datos de entrada
-        $this->validate([
-            'fecha' => 'required|date',
-            'hora' => 'required|date_format:H:i',
-            'cantidad_personas' => 'required|integer|min:1',
-        ]);
 
         // Realizar la reserva
         $this->guardarReserva();
