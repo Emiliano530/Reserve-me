@@ -91,6 +91,10 @@ class FastBooking extends Component
                 $reservation->guest_number = $this->cantidad_personas;
                 $reservation->reservation_datetime = $this->fecha . ' ' . $this->hora;
                 $reservation->reservation_status = 'Pendiente';
+                if (!auth()->check()) {
+                    // Redirigir al usuario al inicio de sesión
+                    return redirect()->route('dashboard');
+                }
                 $reservation->reference_name = auth()->user()->name;
                 $reservation->payment_status = 'Pendiente';
                 $reservation->id_table = $randomTableId;

@@ -7,8 +7,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
                 </svg>
-                <x-input class="h-8 text-black w-36" type="date" title="Fecha para reservar"
-                    value="{{ date('Y-m-d') }}" />
+                <x-input class="h-8 text-black w-36" type="date" title="Fecha para reservar" wire:model="fecha"
+                    value="{{ $fecha }}" />
             </div>
             <div class="flex justify-center items-center p-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -16,8 +16,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <x-input class="h-8 text-black w-36" type="time" title="Hora de la reserva"
-                    value="{{ date('H:i') }}" />
+                <x-input class="h-8 text-black w-36" type="time" title="Hora de la reserva" wire:model="hora"
+                    value="{{ $hora }}" />
             </div>
             <div class="flex justify-center items-center p-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -25,7 +25,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <x-input class="h-8 text-black w-36" type="number" title="Cantidad de personas" />
+                <x-input class="h-8 text-black w-36" type="number" wire:model="personas"
+                    title="Cantidad de personas" />
             </div>
         </div>
         <button wire:click="sendFilter"
@@ -37,22 +38,35 @@
             </svg>
         </button>
     </div>
-    <div class="recomendaciones relative p-2 bg-indigo-900 rounded-3xl mx-1 w-[76vw]">
-        <div class="flex justify-center items-center p-2 w-full">
+    <div class="recomendaciones p-2 bg-indigo-900 rounded-3xl mx-1 w-[76vw]">
+        <div class="flex items-center justify-center mt-5 mb-0">
+            <h1 class="text-white text-3xl px-10 py-2 border-b-2 border-white">Paquetes</h1>
+        </div>
+        <div class="flex relative justify-center items-center p-2 w-full">
             <div class="flex gap-5 text-white p-10">
                 @foreach ($visiblepackages as $item)
                     <div @click="mostrar = !mostrar , reserva=!reserva" wire:click="showData({{ $item->id }})"
                         class="card cursor-pointer hover:rotate-1 flex flex-col justify-center bg-black rounded-3xl items-center w-96 min-h-80">
                         <div class="h-full w-full">
                             <div class="flex items-center justify-center h-56">
-                                <img class="w-full h-full rounded-t-3xl object-cover"
-                                    src="{{ asset($item->packageImage_url) }}" alt="image">
+
+                                @if ($item->packageImage_url)
+                                    <img class="w-full h-full rounded-t-3xl object-cover"
+                                        src="{{ asset($item->packageImage_url) }}">
+                                @else
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor"
+                                        class="w-full h-full rounded-t-3xl stroke-white">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                    </svg>
+                                @endif
                             </div>
-                            <div
-                                class="flex flex-col items-center justify-center h-24 p-2 bg-emerald-600 rounded-b-3xl">
-                                <div class="p-1 capitalize text-center text-lg font-bold">{{ $item->package_name }}
+                            <div class="flex flex-col items-center h-28 px-2 py-2 bg-emerald-600 rounded-b-3xl">
+                                <div class="capitalize text-center text-lg font-bold px-10 border-b border-white">
+                                    {{ $item->package_name }}
                                 </div>
-                                <div class="px-4 text-center break-words overflow-hidden h-12 w-96">
+                                <div class="px-4 py-2 text-gray-200 text-center break-words overflow-hidden w-96">
                                     {{ $item->description }}
                                 </div>
                             </div>
@@ -60,57 +74,65 @@
                     </div>
                 @endforeach
             </div>
+            <button class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-0 focus:outline-none"
+                wire:click="previousItems">
+                <svg aria-hidden="true" class="w-10 h-10 text-gray-800 rounded-full p-2 hover:bg-black/40"
+                    fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+
+            </button>
+            <button
+                class="absolute next-button top-0 right-0 z-30 flex items-center justify-center h-full px-0 focus:outline-none"
+                wire:click="nextItems">
+                <svg aria-hidden="true" class="w-10 h-10 text-gray-800 rounded-full p-2 hover:bg-black/40"
+                    fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
         </div>
-        <button class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-2 focus:outline-none"
-            wire:click="previousItems">
-            <svg aria-hidden="true" class="w-10 h-10 text-gray-800 rounded-full p-2 hover:bg-black/40" fill="none"
-                stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
 
-        </button>
-        <button
-            class="absolute next-button top-0 right-0 z-30 flex items-center justify-center h-full px-2 focus:outline-none"
-            wire:click="nextItems">
-            <svg aria-hidden="true" class="w-10 h-10 text-gray-800 rounded-full p-2 hover:bg-black/40" fill="none"
-                stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-        </button>
     </div>
-
     <div :class="{ 'datos': mostrar, 'hidden': !mostrar }"
         class="overlay mostrar overflow-hidden fixed inset-0 z-40 flex flex-col justify-center items-center bg-black/80">
         <div :class="{ '': reserva, 'hidden': !reserva }"
-            class="modal relative z-50 flex gap-2 items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-600 to-indigo-600  min-w-[50vw] min-h-[20vw]">
+            class="modal relative z-50 flex gap-2 items-center justify-center rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-600 to-indigo-600  min-w-[50vw] min-h-[25vw]">
             <span wire:loading class="text-white">Cargando..</span>
             @if ($package)
-                <img wire:loading.remove class="absolute w-60 min-h-[20vw] left-0 rounded-r-full object-cover"
-                    src="{{ asset($package->packageImage_url) }}" alt="image">
-                <div class="absolute w-[32vw] min-h-[18vw] left-60 text-white flex flex-col items-center">
-                    <div class="text-3xl font-bold p-2 border-b-2 mb-1 border-b-white">{{ $package->package_name }}
-                    </div>
-                    <div class="p-2">{{ $package->description }}</div>
-                    <div class="font-bold p-2">Este paquete contiene:</div>
-                    @if (count($package->options) > 4)
-                        <ul class="text-white list-disc list-inside grid grid-cols-2 gap-2">
-                            @foreach ($package->options as $option)
+
+                @if ($package->packageImage_url)
+                    <img wire:loading.remove class="absolute w-60 min-h-[25vw] left-0 rounded-r-full object-cover"
+                        src="{{ asset($package->packageImage_url) }}">
+                @else
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" wire:loading.remove
+                        class="absolute w-60 min-h-[25vw] bg-slate-700 stroke-white left-0 rounded-r-full object-cover">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                @endif
+                <div class="absolute w-[32vw] min-h-[23vw] left-60 text-white flex flex-col items-center">
+                    <div class="text-3xl font-bold p-2 mb-1">{{ $package->package_name }}</div>
+                    <div class="p-2 text-lg">{{ $package->description }}</div>
+                    <div class="font-bold p-2 mt-4 border-t border-t-white mb-2">Este paquete contiene:</div>
+                    <ul class="text-gray-200 px-10 py-2 list-disc list-inside grid grid-cols-3 gap-y-2 gap-x-5">
+                        @if ($package->options)
+                            @php
+                                $options = unserialize($package->options);
+                            @endphp
+                            @foreach ($options as $option)
                                 <li class="">{{ $option }}</li>
                             @endforeach
-                        </ul>
-                    @else
-                        <ul class="text-white list-disc list-inside">
-                            @foreach ($package->options as $option)
-                                <li class="">{{ $option }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                    <span class="absolute bottom-0 right-0 text-white mt-5 p-5 break-words">Precio por persona:
-                        ${{ $package->priceXguest }}</span>
+                        @endif
+                    </ul>
                 </div>
+                <span
+                    class="absolute bottom-0 right-0 text-white text-xl mt-5 p-5 break-words overflow-wrap: break-word;">
+                    <strong>${{ $package->priceXguest }}</strong> MXN/pers.</span>
             @endif
             <!--close-->
-            <div class="absolute p-4 top-0 right-0" @click="mostrar = !mostrar" wire:click="clearPackage">
+            <div class="absolute p-4 top-0 right-0" wire:click="clearPackage"
+                @click="mostrar = !mostrar, reserva=!reserva ">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-10 h-10 stroke-white hover:stroke-red-600 cursor-pointer">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -127,7 +149,8 @@
             </div>
             <!--input 1-->
             <x-label class="font-bold" for="personas">Cantidad de personas:</x-label>
-            <x-input-icon wire:model="personas" class="w-96 text-center" id="personas" placeholder="cantidad de personas" type="number">
+            <x-input-icon wire:model="personas" class="w-96 text-center" id="personas"
+                placeholder="cantidad de personas" type="number">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="black" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -136,7 +159,7 @@
             </x-input-icon>
             <!--input 2-->
             <x-label class="font-bold  mt-2" for="fecha">Fecha:</x-label>
-            <x-input-icon wire:model="fecha" class="w-96 text-center" id="fecha" value="{{ date('Y-m-d') }}" placeholder="fecha"
+            <x-input-icon wire:model="fecha" class="w-96 text-center" id="fecha" placeholder="fecha"
                 type="date">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="black" class="w-6 h-6">
@@ -146,7 +169,7 @@
             </x-input-icon>
             <!--input 3-->
             <x-label class="font-bold  mt-2" for="hora">Hora:</x-label>
-            <x-input-icon wire:model="hora" class="w-96 text-center" id="hora" value="{{ date('H:i') }}" placeholder="hora"
+            <x-input-icon wire:model="hora" class="w-96 text-center" id="hora" placeholder="hora"
                 type="time">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="black" class="w-6 h-6">
@@ -156,7 +179,8 @@
             </x-input-icon>
             <!--input 4-->
             <x-label class="font-bold  mt-2" for="referencia">Nombre de referencia:</x-label>
-            <x-input-icon wire:model="referencia" class="w-96 text-center" id="referencia" placeholder="nombre de referencia" type="text">
+            <x-input-icon wire:model="referencia" class="w-96 text-center" id="referencia"
+                placeholder="nombre de referencia" type="text">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="black" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -165,7 +189,8 @@
             </x-input-icon>
             <!--input 5-->
             <x-label class="font-bold  mt-2" for="evento">Evento asociado</x-label>
-            <x-input-icon wire:model="evento" class="w-96 text-center" id="evento" placeholder="opcional" type="text">
+            <x-input-icon wire:model="evento" class="w-96 text-center" id="evento" placeholder="opcional"
+                type="text">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="black" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -175,10 +200,13 @@
 
             <div class="flex justify-center items-center gap-2 mt-5">
                 <x-button wire:click="MakeReservation" class="text-xl">Reservar</x-button>
-                <x-secondary-button class="text-2xl" @click="mostrar = !mostrar" wire:click="clearPackage">Cancelar</x-secondary-button>
+                <x-secondary-button class="text-2xl" wire:click="clearPackage"
+                    @click="mostrar = !mostrar; reserva=false">Cancelar
+                </x-secondary-button>
             </div>
             <!--close-->
-            <div class="absolute p-4 top-0 right-0" @click="mostrar = !mostrar" wire:click="clearPackage">
+            <div class="absolute p-4 top-0 right-0" wire:click="clearPackage"
+                @click="mostrar = !mostrar; reserva=false">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-10 h-10 stroke-white hover:stroke-red-600 cursor-pointer">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />

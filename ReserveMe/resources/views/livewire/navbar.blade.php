@@ -122,10 +122,10 @@
                 <a @click="open = false" href="{{ route('menu') }}"
                     class="border-b-4 border-transparent {{ request()->is('menu') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Menu</a>
                 <a @click="open = false" href="{{ route('recomendaciones') }}"
-                    class="border-b-4 border-transparent {{ request()->is('recomendaciones') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Recomendaciones</a>
+                    class="border-b-4 border-transparent {{ request()->is('recomendaciones') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Reservar</a>
                 @auth
                     <a @click="open = false" href="{{ route('reservas') }}"
-                        class="border-b-4 border-transparent {{ request()->is('reservas') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Reservas</a>
+                        class="border-b-4 border-transparent {{ request()->is('reservas') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Mis reservas</a>
                 @endauth
             </div>
 

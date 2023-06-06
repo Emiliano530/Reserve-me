@@ -53,6 +53,22 @@
                 y una variedad de opciones para desayunar y cenar.</p>
         </div>
     </div>
+    <div :class="{ '': slide === 5, 'hidden': slide !== 5 }"
+        class="card min-h-1/2 flex flex-grow items-center text-center justify-center p-10 gap-5">
+        <div class="text-center text-white w-1/3 p-5">
+            <div class="text-5xl font-bold italic mb-5">Reserva ahora</div>
+            <p>Empieza a reservar ahora mismo con nuestra herramienta de reserva rápida.
+                Hacer tu reserva nunca fue tan fácil.
+                Solo sigue estos 3 sencillos pasos.   
+            </p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-10 h-10 stroke-emerald-600">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+          </svg>
+        <div class="flex justify-center items-center w-2/3 h-full p-5">
+            <img class="h-[17.6vw] w-full rounded-3xl" src="{{ asset('img/tutorial.png') }}" alt="">
+        </div>
+    </div>
     <div class="absolute z-30 flex items-center justify-center space-x-3 -translate-x-1/2 bottom-5 left-1/2">
         <button type="button" class="rounded-full"
             :class="{ 'bg-blue-600 w-4 h-4': slide === 1, 'bg-blue-300 w-3 h-3': slide != 1 }"
@@ -66,9 +82,12 @@
         <button type="button" class="rounded-full"
             :class="{ 'bg-blue-600 w-4 h-4': slide === 4, 'bg-blue-300 w-3 h-3': slide != 4 }"
             @click="slide=4"></button>
+            <button type="button" class="rounded-full"
+            :class="{ 'bg-blue-600 w-4 h-4': slide === 5, 'bg-blue-300 w-3 h-3': slide != 5 }"
+            @click="slide=5"></button>
     </div>
     <!-- Slider controls -->
-    <div @click="slide = slide > 1 ? slide - 1 : 4"
+    <div @click="slide = slide > 1 ? slide - 1 : 5"
         class="absolute card top-0 left-0 z-30 flex items-center justify-center h-full px-2 focus:outline-none">
         <span
             class="inline-flex items-center justify-center cursor-pointer w-8 h-8 rounded-full sm:w-10 sm:h-10 hover:bg-blue-950/60 focus:ring-4 focus:outline-none">
@@ -79,7 +98,7 @@
             <span class="sr-only">Previous</span>
         </span>
     </div>
-    <div @click="slide = slide < 4 ? slide + 1 : 1"
+    <div @click="slide = slide < 5 ? slide + 1 : 1"
         class="absolute card next-button top-0 right-0 z-30 flex items-center justify-center h-full px-2 focus:outline-none">
         <span
             class="inline-flex items-center justify-center cursor-pointer w-8 h-8 rounded-full sm:w-10 sm:h-10 hover:bg-blue-950/60 focus:ring-4 focus:outline-none">

@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->integer('table_number');
             $table->integer('guestNumber');
+            $table->string('description');
             $table->foreignId('id_area')
                 ->constrained('areas')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->string('table_url')->nullable();
+            $table->text('table_url')->nullable();
             $table->timestamps();
         });
     }

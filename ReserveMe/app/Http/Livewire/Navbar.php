@@ -22,7 +22,7 @@ class Navbar extends Component
     public $referencia;
     public $evento;
     public $packageId;
-    public $redirectTo;
+
     public function mount()
     {
         $this->user = Auth::user();
@@ -114,10 +114,10 @@ class Navbar extends Component
                 $this->referencia = null;
                 $this->evento = null;
                 $this->packageId = null;
-
-                $this->redirectTo = route('reservas');
                 // Redireccionar o realizar alguna otra acción después de guardar la reserva
                 // Por ejemplo, redireccionar a una página de éxito o mostrar un mensaje de confirmación
+                $this->emit('guardado', 'hecho', '¡Reserva guardada exitosamente!');
+                $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 200]);
             } else {
                 // Mostrar un mensaje de error indicando que no hay mesas disponibles
                 $this->emit('notification', 'error', 'No hay mesas disponibles para hacer la reserva.');
@@ -138,9 +138,6 @@ class Navbar extends Component
         return view('livewire.navbar');
         // Realizar la redirección después de que el componente se haya renderizado
         if ($this->redirectTo) {
-            session()->put('save_reserve', [
-                'saveData' => true,
-            ]);
             return redirect($this->redirectTo);
         }
     }

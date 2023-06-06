@@ -6,6 +6,7 @@ use App\Models\Package;
 use App\Models\Reservation;
 use App\Models\Table;
 use Carbon\Carbon;
+use DateTimeZone;
 use Livewire\Component;
 
 class Recomendations extends Component
@@ -29,7 +30,11 @@ class Recomendations extends Component
         $this->packages = Package::all();
 
         $this->updateVisiblepackages();
+        $zonaHoraria = new DateTimeZone('America/Mexico_City');
+        $fechaHoraLocal = Carbon::now($zonaHoraria);
 
+        $this->fecha = $fechaHoraLocal->format('Y-m-d');
+        $this->hora = $fechaHoraLocal->format('H:i');
     }
 
     public function nextItems()
@@ -68,12 +73,19 @@ class Recomendations extends Component
     public function clearPackage()
     {
         $this->package = null;
+        $zonaHoraria = new DateTimeZone('America/Mexico_City');
+        $fechaHoraLocal = Carbon::now($zonaHoraria);
+
+        $this->fecha = $fechaHoraLocal->format('Y-m-d');
+        $this->hora = $fechaHoraLocal->format('H:i');
+
+        $this->personas = null;
     }
 
     public function MakeReservation()
     {
         // Validar los datos de entrada
-        $this->packageId=$this->package->id;
+        $this->packageId = $this->package->id;
         $this->validate([
             'fecha' => 'required|date',
             'hora' => 'required|date_format:H:i',
@@ -89,7 +101,7 @@ class Recomendations extends Component
                 'personas' => $this->personas,
                 'referencia' => $this->referencia,
                 'evento' => $this->evento,
-                'packageId'=>$this->packageId,
+                'packageId' => $this->packageId,
             ]);
 
             // Redirigir al usuario al inicio de sesión
@@ -140,7 +152,7 @@ class Recomendations extends Component
                 $reservation->reference_name = $this->referencia;
                 $reservation->associated_event = $this->evento;
                 $reservation->payment_status = 'Pendiente';
-                $reservation->id_package=$this->packageId;
+                $reservation->id_package = $this->packageId;
                 $reservation->id_table = $randomTableId;
                 $reservation->id_user = auth()->user()->id;
                 // Guardar la reserva en la base de datos
@@ -170,6 +182,17 @@ class Recomendations extends Component
         }
     }
 
+    public function sendFilter()
+    {
+        if ($this->personas != null) {
+            session()->put('filter_data', [
+                'fecha' => $this->fecha,
+                'hora' => $this->hora,
+                'personas' => $this->personas,
+            ]);
+            return redirect()->route('filtrados');
+        }
+    }
     public function render()
     {
         return view('livewire.recomendations');
@@ -182,5 +205,5 @@ class Recomendations extends Component
         }
     }
 
-    protected $listeners = ['redireccionar','guardado'];
+    protected $listeners = ['redireccionar'];
 }

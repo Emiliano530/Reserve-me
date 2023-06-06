@@ -14,13 +14,6 @@ class Reservas extends Component
 
     public function mount()
     {
-        if (session()->has('save_reserve')) {
-            $this->emit('guardado', 'hecho', '¡Reserva guardada exitosamente!');
-            $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 200]);
-            // Eliminar los datos de reserva de la sesión
-            session()->forget('save_reserve');
-        }
-
         $user = Auth::user();
         $reservaciones = Reservation::where('id_user', $user->id)->get();
 
@@ -71,10 +64,29 @@ class Reservas extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
         }
     }
-    public function guardado()
+
+    public function confirmarEliminarHistorial()
     {
-        $this->emit('guardado', 'hecho', '¡Reserva guardada exitosamente!');
-        $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 200]);
+        $this->emit('confirmEliminarHistorial', '¿Estás seguro de eliminar historial completo?');
+        $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
     }
-    protected $listeners = ['actualizarColumna', 'eliminarReserva', 'guardado'];
+
+    public function eliminarHistorial()
+    {
+        $user = Auth::user();
+        $reservas = Reservation::where('id_user', $user->id)
+            ->whereNotIn('reservation_status', ['pendiente'])
+            ->get();
+
+        foreach ($reservas as $reserva) {
+            $reserva->delete();
+        }
+
+        $this->emit('confirm', '!Historial eliminado!', 'Todo el historial ha sido eliminado.');
+        $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
+    }
+
+
+
+    protected $listeners = ['actualizarColumna', 'eliminarReserva','eliminarHistorial'];
 }

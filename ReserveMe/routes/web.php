@@ -38,3 +38,11 @@ Route::get('/reservas', function () {
 Route::get('/recomendaciones', function () {
     return view('reserve.recomendaciones');
 })->name('recomendaciones');
+
+Route::get('/filtrados', function () {
+    return view('reserve.filtrados');
+})->name('filtrados');
+
+Route::get('/mesa', function () {
+    return view('reserve.tableData');
+})->name('mesa');
