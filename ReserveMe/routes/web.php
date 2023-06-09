@@ -43,6 +43,6 @@ Route::get('/filtrados', function () {
     return view('reserve.filtrados');
 })->name('filtrados');
 
-Route::get('/mesa', function () {
-    return view('reserve.tableData');
+Route::get('/mesa/{mesaId}', function ($mesaId) {
+    return view('reserve.tableData')->with('mesaId', $mesaId);
 })->name('mesa');

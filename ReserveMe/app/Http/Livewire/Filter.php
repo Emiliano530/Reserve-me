@@ -91,7 +91,8 @@ class Filter extends Component
         }
     }
 
-    public function showDataTable(){
-        return redirect()->route('mesa');
+    public function showDataTable($mesaId)
+    {
+        return redirect()->to('/mesa/' . $mesaId);
     }
 }

@@ -14,11 +14,13 @@ class TableSeeder extends Seeder
      */
     public function run(): void
     {
+        $tableImage=serialize(['storage/table/mesa1.jpg','storage/table/mesa2.jpg','storage/table/mesa3.jpg','storage/table/mesa4.jpg','storage/table/mesa5.jpg','storage/table/mesa6.jpg']);
             $tables = [
                 [
                     'table_number' => 1,
                     'guestNumber' => 2,
                     'description' =>'Esta mesa...',
+                    'table_url'=>$tableImage,
                     'id_area' => 1,
                 ],
                 [

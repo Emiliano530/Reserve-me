@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('table-data')
+    @livewire('table-data', ['mesaId' => $mesaId])
 </x-app-layout>

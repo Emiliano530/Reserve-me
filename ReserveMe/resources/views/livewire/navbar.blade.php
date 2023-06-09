@@ -77,7 +77,7 @@
                                     <form method="POST" action="{{ route('logout') }}" x-data>
                                         @csrf
 
-                                        <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                                        <x-dropdown-link class="dropdown-link-logout" href="{{ route('logout') }}" @click.prevent="$root.submit();">
                                             {{ __('Cerrar sesión') }}
                                         </x-dropdown-link>
                                     </form>
@@ -125,28 +125,29 @@
                     class="border-b-4 border-transparent {{ request()->is('recomendaciones') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Reservar</a>
                 @auth
                     <a @click="open = false" href="{{ route('reservas') }}"
-                        class="border-b-4 border-transparent {{ request()->is('reservas') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Mis reservas</a>
+                        class="border-b-4 border-transparent {{ request()->is('reservas') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Mis
+                        reservas</a>
                 @endauth
             </div>
 
         </div>
     </nav>
-</div>
 
 
-<style>
-    body {
-        overflow: auto;
-    }
+    <style>
+        body {
+            overflow: auto;
+        }
 
-    body.overlay-active {
-        overflow: hidden;
-    }
-</style>
+        body.overlay-active {
+            overflow: hidden;
+        }
+    </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const overlay = document.querySelector('.transform');
+        const logoutButton = document.querySelector('.dropdown-link-logout');
 
         // Observar cambios en la clase del overlay
         const observer = new MutationObserver(function(mutationsList, observer) {
@@ -160,16 +161,14 @@
         observer.observe(overlay, {
             attributes: true
         });
+
+        if (logoutButton) {
+            // Escuchar el evento click del botón de cerrar sesión
+            logoutButton.addEventListener('click', function() {
+                // Redirigir al usuario al dashboard
+                window.location.href = '{{ route('dashboard') }}';
+            });
+        }
     });
-
-    // Obtener el botón de cerrar sesión por su clase o ID
-    const logoutButton = document.querySelector('.dropdown-link-logout');
-
-    // Escuchar el evento click del botón de cerrar sesión
-    logoutButton.addEventListener('click', function() {
-        // Redirigir al usuario al dashboard
-        window.location.href = '{{ route('dashboard') }}';
-    });
-
-    
 </script>
+</div>

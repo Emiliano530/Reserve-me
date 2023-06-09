@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,4 +17,13 @@ class Table extends Model
     
 
     protected $fillable = ['table_number', 'id_area'];
+
+    protected function tableUrl(): Attribute
+    {
+        return new Attribute(
+            get: fn($value) => unserialize($value),
+
+            set: fn($value) => serialize($value)
+        );
+    }
 }

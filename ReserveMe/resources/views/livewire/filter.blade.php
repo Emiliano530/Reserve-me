@@ -58,17 +58,13 @@
             @if ($mesas)
                 <div class="grid grid-cols-2 gap-2 p-2 overflow-y-scroll h-[16vw] ">
                     @foreach ($mesas as $mesa)
-                        <div wire:click="showDataTable"
+                        <div wire:click="showDataTable({{ $mesa->id }})"
                             class=" flex gap-2 hover:opacity-80 hover:cursor-pointer text-white bg-blue-900 h-28 rounded-3xl">
-                            <div class="flex items-center justify-center h-full w-36">
+                            <div class="flex items-center justify-center h-28 w-36">
                                 <div class="flex flex-col w-full h-full ">
                                     @if ($mesa->table_url)
-                                        @php
-                                            $options = unserialize($mesa->table_url);
-                                            $firstOption = reset($options);
-                                        @endphp
-                                        <img class="bg-gray-700 rounded-t-3xl object-cover"
-                                            src="{{ asset($firstOption) }}">
+                                        <img class="bg-gray-700 h-[5.15vw] rounded-t-3xl object-cover"
+                                            src="{{ asset($mesa->table_url[0]) }}">
                                     @else
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor"

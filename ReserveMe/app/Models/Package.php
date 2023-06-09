@@ -24,7 +24,7 @@ class Package extends Model
             set: fn($value) => strtolower($value)
         );
     }
-    protected function Description(): Attribute
+    protected function description(): Attribute
     {
         return new Attribute(
             get: fn($value) => ucfirst($value),
@@ -32,7 +32,7 @@ class Package extends Model
             set: fn($value) => strtolower($value)
         );
     }
-    protected function Options(): Attribute
+    protected function options(): Attribute
     {
         return new Attribute(
             get: fn($value) => unserialize($value),
