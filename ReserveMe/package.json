@@ -18,7 +18,9 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "datetimepicker": "^0.1.39",
         "sweetalert2": "^11.7.5",
-        "swiper": "^9.3.2"
+        "swiper": "^9.3.2",
+        "tempusdominus-bootstrap-4": "^5.39.2"
     }
 }

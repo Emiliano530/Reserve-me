@@ -13,7 +13,7 @@ class UpdateProfile extends Component
     use WithFileUploads;
 
     public $userId;
-    public $name; 
+    public $name;
     public $lastName;
     public $phone;
     public $birthday;
@@ -73,7 +73,6 @@ class UpdateProfile extends Component
             $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
         }
     }
-
 
     public function update()
     {
