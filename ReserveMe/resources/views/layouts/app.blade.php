@@ -15,9 +15,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inria+Serif&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 
-
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Styles -->
     @livewireStyles
@@ -26,6 +26,7 @@
 <body
     class="no-horizontal-scroll font-inria antialiased flex flex-col justify-between min-h-screen bg-indigo-950 bg-repeat z-10 scrollbar-w-0"
     style="background-image: url('{{ asset('img/pattern.svg') }}');">
+    @livewireScripts
     @livewire('navbar')
     @livewire('fast-booking')
     <!-- Page Heading -->
@@ -44,7 +45,6 @@
     </main>
     <x-footer />
     @stack('modals')
-    @livewireScripts
 </body>
 <style>
     .no-horizontal-scroll {

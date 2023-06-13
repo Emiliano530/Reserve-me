@@ -3,11 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Package;
-use App\Models\Reservation; 
+use App\Models\Reservation;
 use App\Models\Table;
 use Carbon\Carbon;
 use Livewire\Component;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -16,7 +17,6 @@ class FastBooking extends Component
     public $fecha;
     public $hora;
     public $cantidad_personas;
-
 
     public function render()
     {
@@ -32,11 +32,11 @@ class FastBooking extends Component
     {
         // Validar los datos de entrada
         $this->validate([
-            'fecha' => 'required|date',
-            'hora' => 'required|date_format:H:i',
+            'fecha' => 'required',
+            'hora' => 'required',
             'cantidad_personas' => 'required|integer|min:1',
         ]);
-        
+
         // Verificar si el usuario está autenticado
         if (!auth()->check()) {
             // Guardar los datos de reserva en la sesión
@@ -103,8 +103,11 @@ class FastBooking extends Component
                 $reservation->save();
 
                 // Limpiar los campos después de guardar la reserva
-                $this->fecha = null;
-                $this->hora = null;
+                $mexicoTimezone = 'America/Mexico_City';
+                $mexicoTime = Carbon::now($mexicoTimezone)->format('H:i');
+
+                $this->fecha = now()->format('Y-m-d');
+                $this->hora = $mexicoTime;
                 $this->cantidad_personas = null;
 
                 // Redireccionar o realizar alguna otra acción después de guardar la reserva
@@ -125,6 +128,8 @@ class FastBooking extends Component
 
     public function mount()
     {
+        App::setLocale('es'); // Establecer el idioma en español
+
         // Verificar si hay datos de reserva en la sesión
         if (session()->has('reservation_data')) {
             // Obtener los datos de reserva de la sesión

@@ -44,46 +44,143 @@
 
             </div>
         </div>
-        <div
-            class="flex flex-col h-44 border-2 border-white text-xl p-5 items-center col-span-2 bg-emerald-600 rounded-3xl overflow-hidden">
-            <div class="pt-5 px-10 mb-5 border-b border-white font-bold">
-                Datos de la reserva
+        @auth
+            <div class="flex flex-col col-span-2 gap-2">
+                <div
+                    class="flex flex-col min-h-44 max-h-[18vw] border-2 border-white text-xl p-5 items-center bg-emerald-600 rounded-3xl overflow-hidden">
+                    <div class="pt-5 px-10 mb-5 border-b border-white font-bold">
+                        Datos de la reserva
+                    </div>
+                    <div class="p-1 text-xl">
+                        <strong>{{ $mesa->areas->area_name }}</strong>
+                    </div>
+                    <div class="p-1">
+                        Mesa:
+                        <strong>{{ $mesa->table_number }}</strong>
+                    </div>
+                    <div class="p-1">
+                        Maximo de Personas:
+                        <strong>{{ $mesa->guestNumber }}</strong>
+                    </div>
+                    <div class="p-1">
+                        A nombre de:
+                        <strong>{{ $user->name }}</strong>
+                    </div>
+                </div>
+                <div
+                    class="flex flex-col min-h-44 max-h-[11vw] border-2 border-white text-xl p-5 items-center bg-emerald-600 rounded-3xl overflow-hidden">
+                    <div class="p-1">
+                        <x-input type="date" class="text-black w-44" wire:model="fecha"></x-input>
+                    </div>
+                    <div class="p-1">
+                        <x-input type="time" class="text-black w-44" wire:model="hora"></x-input>
+                    </div>
+                    <div class="p-5">
+                        <x-secondary-button wire:click="reservarMesa">
+                            Reservar
+                        </x-secondary-button>
+                    </div>
+                </div>
             </div>
-            <div class="shadow-2xl p-1">
-                Mesa:
-                <strong>{{ $mesa->table_number }}</strong>
+        @else
+            <div
+                class="flex flex-col min-h-44 max-h-[15vw] border-2 border-white text-xl p-5 items-center col-span-2 bg-emerald-600 rounded-3xl overflow-hidden">
+                <div class="pt-5 px-10 mb-5 border-b border-white font-bold">
+                    Datos de la reserva
+                </div>
+                <div class="p-1 text-xl">
+                    <strong>{{ $mesa->areas->area_name }}</strong>
+                </div>
+                <div class="p-1">
+                    Mesa:
+                    <strong>{{ $mesa->table_number }}</strong>
+                </div>
+                <div class="p-1">
+                    Maximo de Personas:
+                    <strong>{{ $mesa->guestNumber }}</strong>
+                </div>
+                <div class="p-1 text-sm">
+                    * Inicia sesión para realizar tu reserva.
+                </div>
             </div>
-            <div class="shadow-2xl p-1">
-                Personas:
-                <strong>{{ $mesa->guestNumber }}</strong>
-            </div>
-        </div>
+        @endauth
     </div>
+
+    <style>
+        body {
+            overflow: auto;
+        }
+
+        body.overlay-active {
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.querySelector('.mostrar');
+
+            // Observar cambios en la clase del overlay
+            const observer = new MutationObserver(function(mutationsList, observer) {
+                const isOpen = overlay.classList.contains('imagenZoom');
+
+                // Agregar o eliminar la clase 'overlay-active' en el body según el estado del overlay
+                document.body.classList.toggle('overlay-active', isOpen);
+            });
+
+            // Observar cambios en los atributos del overlay
+            observer.observe(overlay, {
+                attributes: true
+            });
+        });
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('notification', function(type, message) {
+                var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
+                var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
+                Swal.fire({
+                    title: type,
+                    text: message,
+                    icon: icon,
+                    timer: timer, // Tiempo en milisegundos
+                    showConfirmButton: false
+                })
+            });
+            Livewire.on('guardado', function(type, message) {
+                var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
+                var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
+                Swal.fire({
+                    title: type,
+                    text: message,
+                    icon: icon,
+                    timer: timer, // Tiempo en milisegundos
+                    showConfirmButton: false
+                }).then((result) => {
+                    Livewire.emit('redireccionar');
+                })
+            });
+
+            function getIconByType(type) {
+                // Asignar el icono correspondiente según el tipo de mensaje
+                switch (type) {
+                    case 'error':
+                        return 'error';
+                    case 'hecho':
+                        return 'success';
+                        // Agregar más casos según sea necesario
+                    default:
+                        return 'info';
+                }
+            }
+
+            function getTimerByType(type) {
+                // Asignar el temporizador correspondiente según el tipo de mensaje
+                switch (type) {
+                    case 'error':
+                        return 3000; // 2 segundos
+                        // Agregar más casos según sea necesario
+                    default:
+                        return 1500; // 1.5 segundos (valor predeterminado)
+                }
+            }
+        });
+    </script>
 </div>
-<style>
-    body {
-        overflow: auto;
-    }
-
-    body.overlay-active {
-        overflow: hidden;
-    }
-</style>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const overlay = document.querySelector('.mostrar');
-
-        // Observar cambios en la clase del overlay
-        const observer = new MutationObserver(function(mutationsList, observer) {
-            const isOpen = overlay.classList.contains('imagenZoom');
-
-            // Agregar o eliminar la clase 'overlay-active' en el body según el estado del overlay
-            document.body.classList.toggle('overlay-active', isOpen);
-        });
-
-        // Observar cambios en los atributos del overlay
-        observer.observe(overlay, {
-            attributes: true
-        });
-    });
-</script>

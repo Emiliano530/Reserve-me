@@ -40,7 +40,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                                             </svg>
-                                        @endif
+                                        @endif 
                                         <button type="button"
                                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:text-gray-300 focus:outline-none focus:bg-gray-900 active:bg-gray-700 transition ease-in-out duration-150">
                                             {{ $user->name }}
@@ -77,7 +77,7 @@
                                     <form method="POST" action="{{ route('logout') }}" x-data>
                                         @csrf
 
-                                        <x-dropdown-link class="dropdown-link-logout" href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                                        <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
                                             {{ __('Cerrar sesión') }}
                                         </x-dropdown-link>
                                     </form>
@@ -133,7 +133,6 @@
         </div>
     </nav>
 
-
     <style>
         body {
             overflow: auto;
@@ -143,32 +142,34 @@
             overflow: hidden;
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.querySelector('.transform');
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const overlay = document.querySelector('.transform');
-        const logoutButton = document.querySelector('.dropdown-link-logout');
+            // Observar cambios en la clase del overlay
+            const observer = new MutationObserver(function(mutationsList, observer) {
+                const isOpen = overlay.classList.contains('translate-x-0');
 
-        // Observar cambios en la clase del overlay
-        const observer = new MutationObserver(function(mutationsList, observer) {
-            const isOpen = overlay.classList.contains('translate-x-0');
-
-            // Agregar o eliminar la clase 'overlay-active' en el body según el estado del overlay
-            document.body.classList.toggle('overlay-active', isOpen);
-        });
-
-        // Observar cambios en los atributos del overlay
-        observer.observe(overlay, {
-            attributes: true
-        });
-
-        if (logoutButton) {
-            // Escuchar el evento click del botón de cerrar sesión
-            logoutButton.addEventListener('click', function() {
-                // Redirigir al usuario al dashboard
-                window.location.href = '{{ route('dashboard') }}';
+                // Agregar o eliminar la clase 'overlay-active' en el body según el estado del overlay
+                document.body.classList.toggle('overlay-active', isOpen);
             });
-        }
-    });
-</script>
+
+            // Observar cambios en los atributos del overlay
+            observer.observe(overlay, {
+                attributes: true
+            });
+
+            // Obtener el botón de cerrar sesión por su clase o ID
+            const logoutButton = document.querySelector('.dropdown-link-logout');
+
+            // Verificar si el botón de cerrar sesión existe antes de agregar el evento click
+            if (logoutButton) {
+                // Escuchar el evento click del botón de cerrar sesión
+                logoutButton.addEventListener('click', function() {
+                    // Redirigir al usuario al dashboard
+                    window.location.href = '{{ route('dashboard') }}';
+                });
+            }
+        });
+    </script>
 </div>

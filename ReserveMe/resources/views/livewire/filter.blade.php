@@ -93,21 +93,22 @@
             @endif
         </div>
     </div>
+
+    <script>
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('click', () => {
+                handleCheckboxSelection(checkbox);
+            });
+        });
+
+        function handleCheckboxSelection(checkbox) {
+            checkboxes.forEach((cb) => {
+                if (cb !== checkbox) {
+                    cb.checked = false;
+                }
+            });
+        }
+    </script>
 </div>
-<script>
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-    checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener('click', () => {
-            handleCheckboxSelection(checkbox);
-        });
-    });
-
-    function handleCheckboxSelection(checkbox) {
-        checkboxes.forEach((cb) => {
-            if (cb !== checkbox) {
-                cb.checked = false;
-            }
-        });
-    }
-</script>

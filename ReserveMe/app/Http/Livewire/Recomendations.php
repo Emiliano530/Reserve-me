@@ -159,8 +159,11 @@ class Recomendations extends Component
                 $reservation->save();
 
                 // Limpiar los campos después de guardar la reserva
-                $this->fecha = null;
-                $this->hora = null;
+                $mexicoTimezone = 'America/Mexico_City';
+                $mexicoTime = Carbon::now($mexicoTimezone)->format('H:i');
+
+                $this->fecha = now()->format('Y-m-d');
+                $this->hora = $mexicoTime;
                 $this->personas = null;
                 $this->referencia = null;
                 $this->evento = null;

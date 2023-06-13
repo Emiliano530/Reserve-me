@@ -214,82 +214,83 @@
             </div>
         </div>
     </div>
+
+    <style>
+        body {
+            overflow: auto;
+        }
+
+        body.overlay-active {
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.querySelector('.mostrar');
+
+            // Observar cambios en la clase del overlay
+            const observer = new MutationObserver(function(mutationsList, observer) {
+                const isOpen = overlay.classList.contains('datos');
+
+                // Agregar o eliminar la clase 'overlay-active' en el body según el estado del overlay
+                document.body.classList.toggle('overlay-active', isOpen);
+            });
+
+            // Observar cambios en los atributos del overlay
+            observer.observe(overlay, {
+                attributes: true
+            });
+        });
+
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('notification', function(type, message) {
+                var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
+                var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
+                Swal.fire({
+                    title: type,
+                    text: message,
+                    icon: icon,
+                    timer: timer, // Tiempo en milisegundos
+                    showConfirmButton: false
+                })
+            });
+            Livewire.on('guardado', function(type, message) {
+                var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
+                var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
+                Swal.fire({
+                    title: type,
+                    text: message,
+                    icon: icon,
+                    timer: timer, // Tiempo en milisegundos
+                    showConfirmButton: false
+                }).then((result) => {
+                    Livewire.emit('redireccionar');
+                })
+            });
+
+            function getIconByType(type) {
+                // Asignar el icono correspondiente según el tipo de mensaje
+                switch (type) {
+                    case 'error':
+                        return 'error';
+                    case 'hecho':
+                        return 'success';
+                        // Agregar más casos según sea necesario
+                    default:
+                        return 'info';
+                }
+            }
+
+            function getTimerByType(type) {
+                // Asignar el temporizador correspondiente según el tipo de mensaje
+                switch (type) {
+                    case 'error':
+                        return 3000; // 2 segundos
+                        // Agregar más casos según sea necesario
+                    default:
+                        return 1500; // 1.5 segundos (valor predeterminado)
+                }
+            }
+        });
+    </script>
 </div>
-<style>
-    body {
-        overflow: auto;
-    }
-
-    body.overlay-active {
-        overflow: hidden;
-    }
-</style>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const overlay = document.querySelector('.mostrar');
-
-        // Observar cambios en la clase del overlay
-        const observer = new MutationObserver(function(mutationsList, observer) {
-            const isOpen = overlay.classList.contains('datos');
-
-            // Agregar o eliminar la clase 'overlay-active' en el body según el estado del overlay
-            document.body.classList.toggle('overlay-active', isOpen);
-        });
-
-        // Observar cambios en los atributos del overlay
-        observer.observe(overlay, {
-            attributes: true
-        });
-    });
-
-    document.addEventListener('livewire:load', function() {
-        Livewire.on('notification', function(type, message) {
-            var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
-            var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
-            Swal.fire({
-                title: type,
-                text: message,
-                icon: icon,
-                timer: timer, // Tiempo en milisegundos
-                showConfirmButton: false
-            })
-        });
-        Livewire.on('guardado', function(type, message) {
-            var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
-            var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
-            Swal.fire({
-                title: type,
-                text: message,
-                icon: icon,
-                timer: timer, // Tiempo en milisegundos
-                showConfirmButton: false
-            }).then((result) => {
-                Livewire.emit('redireccionar');
-            })
-        });
-
-        function getIconByType(type) {
-            // Asignar el icono correspondiente según el tipo de mensaje
-            switch (type) {
-                case 'error':
-                    return 'error';
-                case 'hecho':
-                    return 'success';
-                    // Agregar más casos según sea necesario
-                default:
-                    return 'info';
-            }
-        }
-
-        function getTimerByType(type) {
-            // Asignar el temporizador correspondiente según el tipo de mensaje
-            switch (type) {
-                case 'error':
-                    return 3000; // 2 segundos
-                    // Agregar más casos según sea necesario
-                default:
-                    return 1500; // 1.5 segundos (valor predeterminado)
-            }
-        }
-    });
-</script>

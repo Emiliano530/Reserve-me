@@ -3,9 +3,8 @@
     <div class="flex gap-10 pt-16 px-44">
         <div class="relative w-44 h-44">
             @if ($profileAvatar)
-                <img class="w-full h-full rounded-full object-cover" src="{{ asset($profileAvatar) }}"
-                    alt="Profile Avatar">
-            @else 
+                <img class="w-full h-full rounded-full object-cover" src="{{ asset($profileAvatar) }}">
+            @else
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-full h-full rounded-full bg-indigo-900 stroke-white">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -97,43 +96,44 @@
             </form>
         </div>
     </div>
-</div>
-<script>
-    document.addEventListener('livewire:load', function() {
-        Livewire.on('notification', function(type, message) {
-            var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
-            var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
-            Swal.fire({
-                title: type,
-                text: message,
-                icon: icon,
-                timer: timer, // Tiempo en milisegundos
-                showConfirmButton: false
+
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('notification', function(type, message) {
+                var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje
+                var timer = getTimerByType(type); // Obtener el temporizador según el tipo de mensaje
+                Swal.fire({
+                    title: type,
+                    text: message,
+                    icon: icon,
+                    timer: timer, // Tiempo en milisegundos
+                    showConfirmButton: false
+                });
             });
+
+            function getIconByType(type) {
+                // Asignar el icono correspondiente según el tipo de mensaje
+                switch (type) {
+                    case 'error':
+                        return 'error';
+                    case 'hecho':
+                        return 'success';
+                        // Agregar más casos según sea necesario
+                    default:
+                        return 'info';
+                }
+            }
+
+            function getTimerByType(type) {
+                // Asignar el temporizador correspondiente según el tipo de mensaje
+                switch (type) {
+                    case 'error':
+                        return 3000; // 2 segundos
+                        // Agregar más casos según sea necesario
+                    default:
+                        return 1500; // 1.5 segundos (valor predeterminado)
+                }
+            }
         });
-
-        function getIconByType(type) {
-            // Asignar el icono correspondiente según el tipo de mensaje
-            switch (type) {
-                case 'error':
-                    return 'error';
-                case 'hecho':
-                    return 'success';
-                    // Agregar más casos según sea necesario
-                default:
-                    return 'info';
-            }
-        }
-
-        function getTimerByType(type) {
-            // Asignar el temporizador correspondiente según el tipo de mensaje
-            switch (type) {
-                case 'error':
-                    return 3000; // 2 segundos
-                    // Agregar más casos según sea necesario
-                default:
-                    return 1500; // 1.5 segundos (valor predeterminado)
-            }
-        }
-    });
-</script>
+    </script>
+</div>
