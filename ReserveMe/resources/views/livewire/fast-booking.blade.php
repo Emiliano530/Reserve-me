@@ -50,6 +50,45 @@
 
     <script>
         document.addEventListener('livewire:load', function() {
+            flatpickr('#fecha', {
+                locale: 'es',
+                dateFormat: 'D, d M Y',
+                disable: [
+                    function(date) {
+                        // Obtenemos el día de la semana (0: domingo, 1: lunes, ..., 6: sábado)
+                        const day = date.getDay();
+
+                        // Deshabilitamos los días que no sean viernes, sábado, domingo o lunes
+                        return ![5, 6, 0, 1].includes(day);
+                    }
+                ],
+                // Configuración adicional de Flatpickr si es necesario
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr('#hora', {
+                locale: 'es',
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: 'h:i K',
+                time_24hr: false,
+                minTime: '07:00',
+                maxTime: '22:30',
+                // Configuración adicional de Flatpickr si es necesario
+            });
+        });
+
+        function validarNumero(event, input) {
+            var tecla = event.key;
+            var valor = input.value + tecla;
+            var numero = parseInt(valor);
+
+            if ((tecla === "-" || tecla === "+") || isNaN(numero) || numero <= 0 || numero > 50) {
+                event.preventDefault(); // Evitar que se ingrese el carácter no válido
+            }
+        }
+
+        document.addEventListener('livewire:load', function() {
             flatpickr('#datepicker', {
                 locale: 'es',
                 dateFormat: 'D, d M Y',
@@ -69,10 +108,10 @@
             flatpickr('#timepicker', {
                 locale: 'es',
                 enableTime: true,
-                noCalendar: true,
+                noCalendar: true, 
                 dateFormat: 'h:i K',
                 time_24hr: false,
-                minTime: '7:00',
+                minTime: '07:00',
                 maxTime: '22:30',
                 // Configuración adicional de Flatpickr si es necesario
             });

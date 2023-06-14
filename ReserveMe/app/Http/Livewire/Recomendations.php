@@ -33,8 +33,12 @@ class Recomendations extends Component
         $zonaHoraria = new DateTimeZone('America/Mexico_City');
         $fechaHoraLocal = Carbon::now($zonaHoraria);
 
-        $this->fecha = $fechaHoraLocal->format('Y-m-d');
-        $this->hora = $fechaHoraLocal->format('H:i');
+        $fecha = Carbon::now()->isoFormat('ddd, D MMM YYYY');
+        $fechaModificada = str_replace('.', '', $fecha);
+        $fechaCapitalizada = ucwords($fechaModificada);
+
+        $this->fecha = $fechaCapitalizada;
+        $this->hora = $fechaHoraLocal->format('g:i A');
     }
 
     public function nextItems()
@@ -76,8 +80,12 @@ class Recomendations extends Component
         $zonaHoraria = new DateTimeZone('America/Mexico_City');
         $fechaHoraLocal = Carbon::now($zonaHoraria);
 
-        $this->fecha = $fechaHoraLocal->format('Y-m-d');
-        $this->hora = $fechaHoraLocal->format('H:i');
+        $fecha = Carbon::now()->isoFormat('ddd, D MMM YYYY');
+        $fechaModificada = str_replace('.', '', $fecha);
+        $fechaCapitalizada = ucwords($fechaModificada);
+
+        $this->fecha = $fechaCapitalizada;
+        $this->hora = $fechaHoraLocal->format('g:i A');
 
         $this->personas = null;
     }
@@ -87,8 +95,8 @@ class Recomendations extends Component
         // Validar los datos de entrada
         $this->packageId = $this->package->id;
         $this->validate([
-            'fecha' => 'required|date',
-            'hora' => 'required|date_format:H:i',
+            'fecha' => 'required',
+            'hora' => 'required',
             'personas' => 'required|integer|min:1',
             'referencia' => 'required',
         ]);
@@ -160,9 +168,13 @@ class Recomendations extends Component
 
                 // Limpiar los campos después de guardar la reserva
                 $mexicoTimezone = 'America/Mexico_City';
-                $mexicoTime = Carbon::now($mexicoTimezone)->format('H:i');
+                $mexicoTime = Carbon::now($mexicoTimezone)->format('g:i A');
 
-                $this->fecha = now()->format('Y-m-d');
+                $fecha = Carbon::now()->isoFormat('ddd, D MMM YYYY');
+                $fechaModificada = str_replace('.', '', $fecha);
+                $fechaCapitalizada = ucwords($fechaModificada);
+
+                $this->fecha = $fechaCapitalizada;
                 $this->hora = $mexicoTime;
                 $this->personas = null;
                 $this->referencia = null;

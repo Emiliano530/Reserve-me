@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('reference_name');
             $table->string('associated_event')->nullable();
             $table->text('extras')->nullable();
+            $table->text('Cancel_reason')->nullable();
             $table->string('payment_status');
             $table->foreignId('id_package')
                 ->nullable()

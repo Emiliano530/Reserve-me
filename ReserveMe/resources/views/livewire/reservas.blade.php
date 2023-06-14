@@ -35,8 +35,7 @@
                         <div class="p-1 text-center w-1/5">Acciones</div>
                     </div>
                     @foreach ($reservasPendientes as $reservacion)
-                        <div
-                            class="flex gap-4 {{ $loop->iteration % 2 === 0 ? 'bg-blue-300' : 'bg-gray-300' }} text-black rounded-3xl">
+                        <div class="flex gap-4 bg-gray-300 text-black rounded-3xl">
                             <div class="p-1 text-center w-1/5">{{ $reservacion->guest_number }}</div>
                             <div class="p-1 text-center w-2/5">{{ $reservacion->reservation_datetime }}</div>
                             <div class="p-1 text-center w-1/5">{{ $reservacion->associated_event }}</div>
@@ -44,21 +43,10 @@
                                 <span
                                     class="bg-gray-600 px-2 py-1 rounded-3xl text-white">{{ $reservacion->reservation_status }}</span>
                             </div>
-                            <div class="flex gap-3 justify-center items-center p-1 text-center w-1/5">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor"
-                                    class="w-6 h-6 stroke-emerald-600 hover:stroke-emerald-800 cursor-pointer">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor"
-                                    wire:click="confirmarActualizarColumna({{ $reservacion->id }})"
-                                    class="w-6 h-6 stroke-red-600 hover:stroke-red-800 cursor-pointer">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
 
+                            <div wire:click="confirmarActualizarColumna({{ $reservacion->id }})"
+                                class="flex gap-5 justify-center items-center p-1 text-center w-1/5 text-red-600 hover:text-red-700 cursor-pointer">
+                                Cancelar
                             </div>
 
                         </div>
@@ -103,11 +91,16 @@
                         <div class="p-1 text-center w-1/5">Acciones</div>
                     </div>
                     @foreach ($reservasHistorial as $reservacion)
-                        <div
-                            class="flex gap-4 {{ $loop->iteration % 2 === 0 ? 'bg-blue-300' : 'bg-gray-300' }} text-black rounded-3xl">
+                        <div class="flex gap-4 bg-gray-300 text-black rounded-3xl">
                             <div class="p-1 text-center w-1/5">{{ $reservacion->guest_number }}</div>
                             <div class="p-1 text-center w-2/5">{{ $reservacion->reservation_datetime }}</div>
-                            <div class="p-1 text-center w-1/5">{{ $reservacion->associated_event }}</div>
+                            <div class="flex items-center justify-center p-1 text-center w-1/5">
+                                @empty($reservacion->associated_event)
+                                    <div class="text-sm text-gray-500">No hay evento</div>
+                                @else
+                                    {{ $reservacion->associated_event }}
+                                @endempty
+                            </div>
                             <div class="p-1 text-center w-1/5"><span
                                     class="{{ $reservacion->reservation_status === 'Cancelada' ? 'bg-emerald-600' : 'bg-red-600' }} px-2 py-1 rounded-3xl text-white">{{ $reservacion->reservation_status }}</span>
                             </div>
@@ -126,7 +119,7 @@
         document.addEventListener('livewire:load', function() {
             Livewire.on('cancelar', function(id, message) {
                 Swal.fire({
-                    title: message, 
+                    title: message,
                     text: 'Esta acción no se puede deshacer',
                     icon: 'warning',
                     showCancelButton: true,
@@ -181,7 +174,7 @@
                     timer: 1000
                 })
             });
-            Livewire.on('confirmCancel', function(title, message) {
+            Livewire.on('confirmCancel', function(title, message, id) {
                 Swal.fire({
                     title: title,
                     text: message,
@@ -195,8 +188,26 @@
                     customClass: {
                         icon: 'custom-icon',
                     },
+                    allowOutsideClick: () => !Swal
+                        .isLoading(), // Evitar que se cierre al hacer clic fuera
+                    preConfirm: (inputValue) => {
+                        // Verificar si el campo está vacío
+                        if (inputValue === '') {
+                            Swal.showValidationMessage('Debes ingresar un valor en el campo');
+                        }
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Obtener el valor del campo de entrada
+                        const inputValue = result.value;
+                        // Verificar si el campo está vacío
+                        if (inputValue !== '') {
+                            Livewire.emit('guardarRazon', id, inputValue);
+                        }
+                    }
                 });
             });
+
 
             Livewire.on('guardado', function(type, message) {
                 var icon = getIconByType(type); // Obtener el icono según el tipo de mensaje

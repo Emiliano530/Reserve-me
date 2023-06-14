@@ -20,7 +20,7 @@ class ReservationFactory extends Factory
         $user = User::inRandomOrder()->first();
         return [
             'guest_number' => fake()->randomElement([2, 4, 6]),
-            'reservation_datetime' => fake()->dateTime(),
+            'reservation_datetime' => 'Mié, 14 Jun 2023 08:00 PM',
             'reservation_status' => fake()->randomElement(['Completada','Cancelada','Pendiente']),
             'reference_name' => fake()->name(),
             'associated_event' => fake()->randomElement(['Cumpleaños','Aniversario',NULL]),

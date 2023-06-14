@@ -37,8 +37,12 @@ class Filter extends Component
             $zonaHoraria = new DateTimeZone('America/Mexico_City');
             $fechaHoraLocal = Carbon::now($zonaHoraria);
 
-            $this->fecha = $fechaHoraLocal->format('Y-m-d');
-            $this->hora = $fechaHoraLocal->format('H:i');
+            $fecha = Carbon::now()->isoFormat('ddd, D MMM YYYY');
+            $fechaModificada = str_replace('.', '', $fecha);
+            $fechaCapitalizada = ucwords($fechaModificada);
+
+            $this->fecha = $fechaCapitalizada;
+            $this->hora = $fechaHoraLocal->format('g:i A');
             $this->mesas = Table::all();
         }
         $this->areas = Area::all();

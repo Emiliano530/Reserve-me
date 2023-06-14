@@ -29,7 +29,11 @@ class TableData extends Component
         $mexicoTimezone = 'America/Mexico_City';
         $mexicoTime = Carbon::now($mexicoTimezone)->format('H:i');
 
-        $this->fecha = now()->format('Y-m-d');
+        $fecha = Carbon::now()->isoFormat('ddd, D MMM YYYY');
+        $fechaModificada = str_replace('.', '', $fecha);
+        $fechaCapitalizada = ucwords($fechaModificada);
+
+        $this->fecha = $fechaCapitalizada;
         $this->hora = $mexicoTime;
     }
 
@@ -86,7 +90,7 @@ class TableData extends Component
 
                 // Crear una nueva reserva con los datos proporcionados
                 $reservation = new Reservation();
-                $reservation->guest_number = $this->mesa->guestNumber ;
+                $reservation->guest_number = $this->mesa->guestNumber;
                 $reservation->reservation_datetime = $this->fecha . ' ' . $this->hora;
                 $reservation->reservation_status = 'Pendiente';
                 $reservation->reference_name = $this->user->name;
@@ -102,7 +106,11 @@ class TableData extends Component
                 $mexicoTimezone = 'America/Mexico_City';
                 $mexicoTime = Carbon::now($mexicoTimezone)->format('H:i');
 
-                $this->fecha = now()->format('Y-m-d');
+                $fecha = Carbon::now()->isoFormat('ddd, D MMM YYYY');
+                $fechaModificada = str_replace('.', '', $fecha);
+                $fechaCapitalizada = ucwords($fechaModificada);
+
+                $this->fecha = $fechaCapitalizada;
                 $this->hora = $mexicoTime;
 
                 // Redireccionar o realizar alguna otra acción después de guardar la reserva

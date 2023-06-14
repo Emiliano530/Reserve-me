@@ -88,7 +88,8 @@ class FastBooking extends Component
 
                 // Crear una nueva reserva con los datos proporcionados
                 $reservation = new Reservation();
-                $reservation->guest_number = $this->cantidad_personas;
+                $reservation->guest_number = $this->cantidad_personas; 
+
                 $reservation->reservation_datetime = $this->fecha . ' ' . $this->hora;
                 $reservation->reservation_status = 'Pendiente';
                 if (!auth()->check()) {
@@ -104,9 +105,13 @@ class FastBooking extends Component
 
                 // Limpiar los campos después de guardar la reserva
                 $mexicoTimezone = 'America/Mexico_City';
-                $mexicoTime = Carbon::now($mexicoTimezone)->format('H:i');
+                $mexicoTime = Carbon::now($mexicoTimezone)->format('g:i A');
 
-                $this->fecha = now()->format('Y-m-d');
+                $fecha = Carbon::now()->isoFormat('ddd, D MMM YYYY');
+                $fechaModificada = str_replace('.', '', $fecha);
+                $fechaCapitalizada = ucwords($fechaModificada);
+
+                $this->fecha = $fechaCapitalizada;
                 $this->hora = $mexicoTime;
                 $this->cantidad_personas = null;
 
@@ -129,6 +134,7 @@ class FastBooking extends Component
     public function mount()
     {
         App::setLocale('es'); // Establecer el idioma en español
+        Carbon::setLocale('es');
 
         // Verificar si hay datos de reserva en la sesión
         if (session()->has('reservation_data')) {
@@ -148,14 +154,17 @@ class FastBooking extends Component
         } else {
             // Establecer la fecha y hora actuales de México por defecto
             $mexicoTimezone = 'America/Mexico_City';
-            $mexicoTime = Carbon::now($mexicoTimezone)->format('H:i');
+            $mexicoTime = Carbon::now($mexicoTimezone)->format('g:i A');
 
-            Carbon::setLocale('es');
-            $this->fecha = Carbon::now()->locale('es')->format('D, d M Y');
+            $fecha = Carbon::now()->isoFormat('ddd, D MMM YYYY');
+            $fechaModificada = str_replace('.', '', $fecha);
+            $fechaCapitalizada = ucwords($fechaModificada);
+
+            $this->fecha = $fechaCapitalizada;
             $this->hora = $mexicoTime;
         }
     }
-    
+
     public function redireccionar()
     {
         if (!request()->routeIs('reservas')) {

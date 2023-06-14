@@ -7,8 +7,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
                 </svg>
-                <x-input class="h-8 text-black w-36" type="date" title="Fecha para reservar" wire:model="fecha"
-                    value="{{ $fecha }}" />
+                <x-input class="h-8 text-black w-36 cursor-pointer" type="text" title="Fecha para reservar"
+                    wire:model="fecha" value="{{ date('Y-m-d') }}" id="fecha" readonly />
             </div>
             <div class="flex justify-center items-center p-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -16,8 +16,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <x-input class="h-8 text-black w-36" type="time" title="Hora de la reserva" wire:model="hora"
-                    value="{{ $hora }}" />
+                <x-input class="h-8 text-black w-36 cursor-pointer" type="text" title="Hora de la reserva"
+                    wire:model="hora" value="{{ date('H:i') }}" id="hora" readonly />
             </div>
             <div class="flex justify-center items-center p-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -25,8 +25,9 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <x-input class="h-8 text-black w-36" type="number" wire:model="personas"
-                    title="Cantidad de personas" />
+                <x-input class="h-8 text-black w-36" title="Cantidad de personas" wire:model="personas" id="personas"
+                    placeholder="cantidad de personas" type="number" min="1" max="50"
+                    onkeydown="validarNumero(event, this)" />
             </div>
         </div>
         <button wire:click="sendFilter"
@@ -150,7 +151,8 @@
             <!--input 1-->
             <x-label class="font-bold" for="personas">Cantidad de personas:</x-label>
             <x-input-icon wire:model="personas" class="w-96 text-center" id="personas"
-                placeholder="cantidad de personas" type="number">
+                placeholder="cantidad de personas" type="number" min="1" max="50"
+                onkeydown="validarNumero(event, this)">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="black" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -159,8 +161,8 @@
             </x-input-icon>
             <!--input 2-->
             <x-label class="font-bold  mt-2" for="fecha">Fecha:</x-label>
-            <x-input-icon wire:model="fecha" class="w-96 text-center" id="fecha" placeholder="fecha"
-                type="date">
+            <x-input-icon wire:model="fecha" class="w-96 text-center cursor-pointer" id="fecha"
+                placeholder="fecha" type="text" readonly>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="black" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -169,8 +171,8 @@
             </x-input-icon>
             <!--input 3-->
             <x-label class="font-bold  mt-2" for="hora">Hora:</x-label>
-            <x-input-icon wire:model="hora" class="w-96 text-center" id="hora" placeholder="hora"
-                type="time">
+            <x-input-icon wire:model="hora" class="w-96 text-center cursor-pointer" id="hora"
+                placeholder="hora" type="text" readonly>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="black" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -225,6 +227,45 @@
         }
     </style>
     <script>
+        document.addEventListener('livewire:load', function() {
+            flatpickr('#fecha', {
+                locale: 'es',
+                dateFormat: 'D, d M Y',
+                disable: [
+                    function(date) {
+                        // Obtenemos el día de la semana (0: domingo, 1: lunes, ..., 6: sábado)
+                        const day = date.getDay();
+
+                        // Deshabilitamos los días que no sean viernes, sábado, domingo o lunes
+                        return ![5, 6, 0, 1].includes(day);
+                    }
+                ],
+                // Configuración adicional de Flatpickr si es necesario
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr('#hora', {
+                locale: 'es',
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: 'h:i K',
+                time_24hr: false,
+                minTime: '07:00',
+                maxTime: '22:30',
+                // Configuración adicional de Flatpickr si es necesario
+            });
+        });
+
+        function validarNumero(event, input) {
+            var tecla = event.key;
+            var valor = input.value + tecla;
+            var numero = parseInt(valor);
+
+            if ((tecla === "-" || tecla === "+") || isNaN(numero) || numero <= 0 || numero > 50) {
+                event.preventDefault(); // Evitar que se ingrese el carácter no válido
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const overlay = document.querySelector('.mostrar');
 

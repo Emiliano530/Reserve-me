@@ -70,10 +70,12 @@
                 <div
                     class="flex flex-col min-h-44 max-h-[11vw] border-2 border-white text-xl p-5 items-center bg-emerald-600 rounded-3xl overflow-hidden">
                     <div class="p-1">
-                        <x-input type="date" class="text-black w-44" wire:model="fecha"></x-input>
+                        <x-input class="text-black w-44 cursor-pointer" type="text" title="Fecha para reservar"
+                            wire:model="fecha" value="{{ date('Y-m-d') }}" id="fecha" readonly />
                     </div>
                     <div class="p-1">
-                        <x-input type="time" class="text-black w-44" wire:model="hora"></x-input>
+                        <x-input class="text-black w-44 cursor-pointer" type="text" title="Hora de la reserva"
+                    wire:model="hora" value="{{ date('H:i') }}" id="hora" readonly />
                     </div>
                     <div class="p-5">
                         <x-secondary-button wire:click="reservarMesa">
@@ -116,6 +118,34 @@
         }
     </style>
     <script>
+        document.addEventListener('livewire:load', function() {
+            flatpickr('#fecha', {
+                locale: 'es',
+                dateFormat: 'D, d M Y',
+                disable: [
+                    function(date) {
+                        // Obtenemos el día de la semana (0: domingo, 1: lunes, ..., 6: sábado)
+                        const day = date.getDay();
+
+                        // Deshabilitamos los días que no sean viernes, sábado, domingo o lunes
+                        return ![5, 6, 0, 1].includes(day);
+                    }
+                ],
+                // Configuración adicional de Flatpickr si es necesario
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr('#hora', {
+                locale: 'es',
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: 'h:i K',
+                time_24hr: false,
+                minTime: '07:00',
+                maxTime: '22:30',
+                // Configuración adicional de Flatpickr si es necesario
+            });
+        });
         document.addEventListener('DOMContentLoaded', function() {
             const overlay = document.querySelector('.mostrar');
 

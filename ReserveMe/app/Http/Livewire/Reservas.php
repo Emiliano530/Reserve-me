@@ -44,8 +44,9 @@ class Reservas extends Component
     {
         $reserva = Reservation::where('id', $id)->first();
         $reserva->reservation_status = 'cancelada';
+        $reserva->Cancel_reason = 'sin razón';
         $reserva->save();
-        $this->emit('confirmCancel', 'Lamentamos que hayas cancelado', '¿Podrias contarnos el motivo?');
+        $this->emit('confirmCancel', 'Lamentamos que hayas cancelado', '¿Podrias contarnos el motivo?', $id);
         $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
     }
 
@@ -86,7 +87,12 @@ class Reservas extends Component
         $this->dispatchBrowserEvent('mostrarMensaje', ['duration' => 1000]);
     }
 
+    public function guardarRazon($id, $inputValue)
+    {
+        $reserva = Reservation::where('id', $id)->first();
+        $reserva->Cancel_reason = $inputValue;
+        $reserva->save();
+    }
 
-
-    protected $listeners = ['actualizarColumna', 'eliminarReserva','eliminarHistorial'];
+    protected $listeners = ['actualizarColumna', 'eliminarReserva', 'eliminarHistorial', 'guardarRazon'];
 }
