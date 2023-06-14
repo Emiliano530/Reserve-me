@@ -150,11 +150,12 @@ class FastBooking extends Component
             $mexicoTimezone = 'America/Mexico_City';
             $mexicoTime = Carbon::now($mexicoTimezone)->format('H:i');
 
-            $this->fecha = now()->format('Y-m-d');
+            Carbon::setLocale('es');
+            $this->fecha = Carbon::now()->locale('es')->format('D, d M Y');
             $this->hora = $mexicoTime;
         }
     }
-
+    
     public function redireccionar()
     {
         if (!request()->routeIs('reservas')) {

@@ -100,6 +100,7 @@
         let timerId;
         let isMouseOverCard = false;
 
+        
         function startInterval() {
             timerId = setInterval(function() {
                 if (!isMouseOverCard) {
