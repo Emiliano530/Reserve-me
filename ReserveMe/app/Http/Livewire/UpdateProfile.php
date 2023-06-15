@@ -22,25 +22,26 @@ class UpdateProfile extends Component
     public $newPassword;
     public $confirmPassword;
     public $profileAvatar;
+    public $user;
     protected $listeners = ['profileUpdated' => '$refresh'];
 
     public function mount()
     {
-        $user = auth()->user();
+        $this->user = auth()->user();
 
-        $this->userId = $user->id;
-        $this->name = $user->name;
-        $this->lastName = $user->lastName;
-        $this->phone = $user->phone;
-        $this->birthday = $user->birthday;
-        $this->email = $user->email;
-        $this->profileAvatar = $user->profileAvatar_url;
+        $this->userId = $this->user->id;
+        $this->name = $this->user->name;
+        $this->lastName = $this->user->lastName;
+        $this->phone = $this->user->phone;
+        $this->birthday = $this->user->birthday;
+        $this->email = $this->user->email;
+        $this->profileAvatar = $this->user->profileAvatar_url;
     }
-
+ 
     public function render()
     {
-        $user = auth()->user();
-        $this->profileAvatar = $user->profileAvatar_url;
+        $this->user = auth()->user();
+        $this->profileAvatar = $this->user->profileAvatar_url;
         return view('livewire.update-profile');
     }
 
