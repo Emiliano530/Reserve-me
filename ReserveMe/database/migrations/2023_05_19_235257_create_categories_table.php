@@ -15,9 +15,10 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('category_name');
-            $table->string('categoryPhoto_url')->nullable();
+            $table->binary('category_photo')->nullable();
             $table->timestamps();
         });
+        DB::statement('ALTER TABLE categories MODIFY category_photo LONGBLOB');
     }
 
     /**

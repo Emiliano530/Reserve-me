@@ -1,4 +1,4 @@
-<div x-cloak x-data="{ open: false }" :class="{ 'fixed inset-0 h-full z-50': open, 'z-50': !open }">
+<div x-cloak  x-data="{ open: false }" :class="{ 'fixed inset-0 h-full z-50': open, 'z-50': !open }">
     <nav class="fixed w-full top-0 bg-black border-b border-gray-800">
         <div class="flex justify-between items-center h-16">
             <!-- burger menu-->
@@ -30,9 +30,9 @@
                             <x-dropdown align="right" width="48">
                                 <x-slot name="trigger">
                                     <span class="inline-flex rounded-md">
-                                        @if ($profileAvatar)
+                                        @if ($user->profile_avatar)
                                             <img class="h-10 w-10 rounded-full object-cover mr-2"
-                                                src="{{ asset($profileAvatar) }}" />
+                                                src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->profile_avatar) }}" />
                                         @else
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor"
@@ -121,10 +121,8 @@
                     class="border-b-4 border-transparent {{ request()->is('dashboard') || request()->is('/') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Inicio</a>
                 <a @click="open = false" href="{{ route('menu') }}"
                     class="border-b-4 border-transparent {{ request()->is('menu') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Menu</a>
-                @auth
-                    <a @click="open = false" href="{{ route('reservas') }}"
-                        class="border-b-4 border-transparent {{ request()->is('reservas') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Reservas</a>
-                @endauth
+                <a @click="open = false" href="{{ route('dashboard') }}"
+                    class="border-b-4 border-transparent {{ request()->is('dashboard') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Inicio</a>
                 <a @click="open = false" href="{{ route('dashboard') }}"
                     class="border-b-4 border-transparent {{ request()->is('dashboard') ? 'border-b-emerald-600 hover:border-indigo-700 px-6 hover:px-8' : 'hover:border-indigo-700 hover:px-8' }}">Inicio</a>
             </div>
@@ -162,3 +160,7 @@
         });
     });
 </script>
+
+
+
+

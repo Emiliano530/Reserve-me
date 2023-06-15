@@ -13,7 +13,7 @@
                 de momentos especiales en un espacio dedicado al arte del café.</p>
         </div>
         <div class="flex justify-center items-center w-1/2 h-full p-5 m-5">
-            <img class="min-h-[17.6vw] w-full rounded-3xl" src="{{ asset('img/cafeteria.jpg') }}" alt="">
+            <img class="h-full w-full rounded-3xl" src="{{ asset('img/cafeteria.jpg') }}" alt="">
         </div>
     </div>
     <!-- Card -->
@@ -39,13 +39,13 @@
                 También ofrecemos una selección de tés premium y bebidas frías refrescantes.</p>
         </div>
         <div class="flex justify-center items-center w-1/2 h-full p-5 m-5">
-            <img class="min-h-[17.6vw] w-full rounded-3xl" src="{{ asset('img/Cafe_capuchino.jpg') }}" alt="">
+            <img class="h-full w-full rounded-3xl" src="{{ asset('img/Cafe_capuchino.jpg') }}" alt="">
         </div>
     </div>
     <div :class="{ '': slide === 4, 'hidden': slide !== 4 }"
         class="card min-h-1/2 flex flex-grow items-center text-center justify-center p-10 gap-20">
         <div class="flex justify-center items-center w-1/2 h-full p-5 m-5">
-            <img class="min-h-[17.6vw] w-full rounded-3xl" src="{{ asset('img/fusilli.jpg') }}" alt="">
+            <img class="h-full w-full rounded-3xl" src="{{ asset('img/fusilli.jpg') }}" alt="">
         </div>
         <div class="text-center text-white w-1/2  m-5">
             <div class="text-5xl font-bold italic mb-5">Delicias culinarias</div>

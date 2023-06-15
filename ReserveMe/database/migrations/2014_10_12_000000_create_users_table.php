@@ -20,9 +20,11 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone')->nullable();
             $table->date('birthday')->nullable();
-            $table->string('profileAvatar_url')->nullable();
+            $table->binary('profile_avatar')->nullable();
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE users MODIFY profile_avatar LONGBLOB');
     }
 
     /**

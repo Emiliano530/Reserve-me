@@ -26,7 +26,7 @@ return new class extends Migration
             $table->foreignId('id_user')
                 ->constrained('users')
                 ->cascadeOnUpdate();
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

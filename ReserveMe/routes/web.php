@@ -1,9 +1,7 @@
 <?php
-
 use App\Http\Controllers\DarkModeController;
 use App\Http\Livewire\MostrarOpciones;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', function () {
     return view('dashboard');
 });
@@ -31,6 +28,3 @@ Route::get('/actualizar-perfil', function () {
     return view('reserve.actualizar-perfil');
 })->name('actualizar-perfil');
 
-Route::get('/reservas', function () {
-    return view('reserve.mis-reservas');
-})->name('reservas');
