@@ -13,4 +13,6 @@ class Option extends Model
     {
         return $this->belongsTo(Category::class, 'id_category');
     }
+
+    protected $fillable = ['option_name','description','ingredients','shift','price','id_category','optionImage_url'];
 }

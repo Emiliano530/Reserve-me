@@ -1,4 +1,5 @@
 <div class="flex mt-10 flex-col items-center justify-center">
+    <div class="text-white text-xl">Filtra las mesas por maximo de personas o por área</div>
     <div class="filtro flex justify-center items-center bg-yellow-900 my-5 rounded-3xl h-20 w-[50vw]">
         <div class="flex items-center justify-center h-full w-full">
             <div class="flex justify-center items-center p-4">
@@ -25,7 +26,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <x-input class="h-8 text-black w-36" title="Cantidad de personas" wire:model="personas" id="personas"
+                <x-input wire:keydown.enter="findFilter" class="h-8 text-black w-36" title="Cantidad de personas" wire:model="personas" id="personas"
                     placeholder="cantidad de personas" type="number" min="1" max="50"
                     onkeydown="validarNumero(event, this)" />
             </div>

@@ -12,6 +12,7 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Widgets\ReservationsChart;
 
 class ReservationResource extends Resource
 {
@@ -23,9 +24,12 @@ class ReservationResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id_table')
+
+                Forms\Components\Select::make('id_table')
+                    ->relationship('tables', 'id')
                     ->required(),
-                Forms\Components\TextInput::make('id_user')
+                Forms\Components\Select::make('id_user')
+                    ->relationship('users', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('guest_number')
                     ->required(),
@@ -54,42 +58,42 @@ class ReservationResource extends Resource
                 Tables\Columns\TextColumn::make('id_table'),
                 Tables\Columns\TextColumn::make('id_user'),
                 Tables\Columns\TextColumn::make('guest_number'),
-                Tables\Columns\TextColumn::make('reservation_datetime')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('reservation_datetime'),
                 Tables\Columns\TextColumn::make('reservation_status'),
                 Tables\Columns\TextColumn::make('reference_name'),
                 Tables\Columns\TextColumn::make('associated_event'),
                 Tables\Columns\TextColumn::make('extras'),
                 Tables\Columns\TextColumn::make('payment_status'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
-        return [
+        $pages = [
             'index' => Pages\ListReservations::route('/'),
             'create' => Pages\CreateReservation::route('/create'),
             'edit' => Pages\EditReservation::route('/{record}/edit'),
         ];
-    }    
+
+        $pages['index'][] = ReservationsChart::class;
+
+        return $pages;
+    }
 }

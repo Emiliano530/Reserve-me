@@ -20,6 +20,8 @@ class Reservation extends Model
         return $this->belongsTo(Table::class, 'id_table');
     }
 
+    protected $fillable = ['guest_number','reservation_datetime','reservation_status','reference_name','associated_event','extras','Cancel_reason','payment_status','id_package','id_table','id_user'];
+
     public function setReservationDatetimeAttribute($value)
     {
         $parts = explode(' ', $value);

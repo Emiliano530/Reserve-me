@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AreaResource extends Resource
-{
+{ 
     protected static ?string $model = Area::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -34,29 +34,26 @@ class AreaResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('area_name'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -64,5 +61,5 @@ class AreaResource extends Resource
             'create' => Pages\CreateArea::route('/create'),
             'edit' => Pages\EditArea::route('/{record}/edit'),
         ];
-    }    
+    }
 }

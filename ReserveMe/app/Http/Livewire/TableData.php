@@ -104,7 +104,7 @@ class TableData extends Component
 
                 // Limpiar los campos después de guardar la reserva
                 $mexicoTimezone = 'America/Mexico_City';
-                $mexicoTime = Carbon::now($mexicoTimezone)->format('H:i');
+                $mexicoTime = Carbon::now($mexicoTimezone)->format('g:i A');
 
                 $fecha = Carbon::now()->isoFormat('ddd, D MMM YYYY');
                 $fechaModificada = str_replace('.', '', $fecha);

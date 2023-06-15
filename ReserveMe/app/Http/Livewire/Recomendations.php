@@ -24,6 +24,9 @@ class Recomendations extends Component
     public $referencia;
     public $evento;
     public $packageId;
+    public $extra1;
+    public $extra2;
+    public $extra3;
 
     public function mount()
     {
@@ -159,6 +162,20 @@ class Recomendations extends Component
                 $reservation->reservation_status = 'Pendiente';
                 $reservation->reference_name = $this->referencia;
                 $reservation->associated_event = $this->evento;
+
+                $extras = [];
+                if (!empty($this->extra1)) {
+                    $extras[] = $this->extra1;
+                }
+                if (!empty($this->extra2)) {
+                    $extras[] = $this->extra2;
+                }
+                if (!empty($this->extra3)) {
+                    $extras[] = $this->extra3;
+                }
+
+                $reservation->extras = implode(',', $extras);
+
                 $reservation->payment_status = 'Pendiente';
                 $reservation->id_package = $this->packageId;
                 $reservation->id_table = $randomTableId;

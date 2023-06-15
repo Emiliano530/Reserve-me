@@ -16,7 +16,7 @@ class Table extends Model
     }
     
 
-    protected $fillable = ['table_number', 'id_area'];
+    protected $fillable = ['table_number','guestNumber','description', 'id_area','table_url'];
 
     protected function tableUrl(): Attribute
     {

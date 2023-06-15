@@ -13,6 +13,8 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Spatie\Permission\Models\Role;
+use Livewire\Livewire;
+
 
 
 class UserResource extends Resource
@@ -46,6 +48,7 @@ class UserResource extends Resource
                 Forms\Components\Select::make('role')
                     ->options(Role::pluck('name', 'id')->toArray())
                     ->required(),
+                Forms\Components\TextInput::make('profileAvatar_url'),
             ]);
     }
 

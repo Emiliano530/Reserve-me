@@ -25,12 +25,17 @@ class TableResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('id_area')
-                ->relationship('areas', 'area_name')
-                    ->required(),
                 Forms\Components\TextInput::make('table_number')
                     ->required(),
-                    
+                Forms\Components\TextInput::make('guestNumber')
+                    ->required(),
+                Forms\Components\TextInput::make('description')
+                    ->required(),
+                Forms\Components\Select::make('id_area')
+                    ->relationship('areas', 'area_name')
+                    ->required(),
+
+
             ]);
     }
 
@@ -40,25 +45,26 @@ class TableResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id_area'),
                 Tables\Columns\TextColumn::make('table_number'),
+                Tables\Columns\TextColumn::make('guestNumber'),
+                Tables\Columns\TextColumn::make('description'),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
-        return [
-            
-        ];
+        return [];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -66,5 +72,5 @@ class TableResource extends Resource
             'create' => Pages\CreateTable::route('/create'),
             'edit' => Pages\EditTable::route('/{record}/edit'),
         ];
-    }    
+    }
 }

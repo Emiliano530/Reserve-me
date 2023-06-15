@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OptionResource\Pages;
 use App\Filament\Resources\OptionResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Option;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -23,8 +24,6 @@ class OptionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id_category')
-                    ->required(),
                 Forms\Components\TextInput::make('option_name')
                     ->required()
                     ->maxLength(255),
@@ -38,6 +37,9 @@ class OptionResource extends Resource
                 Forms\Components\TextInput::make('price')
                     ->required(),
                 Forms\Components\TextInput::make('option_image'),
+                Forms\Components\Select::make('id_category')
+                    ->options(Category::pluck('category_name', 'id')->toArray())
+                    ->required(),
             ]);
     }
 
@@ -45,23 +47,19 @@ class OptionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id_category'),
                 Tables\Columns\TextColumn::make('option_name'),
                 Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\TextColumn::make('ingredients'),
                 Tables\Columns\TextColumn::make('shift'),
                 Tables\Columns\TextColumn::make('price'),
-                Tables\Columns\TextColumn::make('option_image'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('id_category'),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

@@ -26,26 +26,21 @@ class CategoryResource extends Resource
                 Forms\Components\TextInput::make('category_name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('category_photo'),
             ]);
     }
-
+ 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('category_name'),
-                Tables\Columns\TextColumn::make('category_photo'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
