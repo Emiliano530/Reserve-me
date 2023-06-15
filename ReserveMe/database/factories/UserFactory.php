@@ -28,9 +28,10 @@ class UserFactory extends Factory
             'name' => fake()->firstName(),
             'lastName' => fake()->lastName(),
             'email' => fake()->email(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => 'password', // password
             'phone' => fake()->phoneNumber(),
             'birthday' => fake()->date(),
+            'role' => '2',
         ];
     }
 

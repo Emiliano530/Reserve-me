@@ -12,6 +12,8 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Spatie\Permission\Models\Role;
+
 
 class UserResource extends Resource
 {
@@ -37,16 +39,13 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('two_factor_secret')
-                    ->maxLength(65535),
-                Forms\Components\Textarea::make('two_factor_recovery_codes')
-                    ->maxLength(65535),
-                Forms\Components\DateTimePicker::make('two_factor_confirmed_at'),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('birthday'),
-                Forms\Components\TextInput::make('profile_avatar'),
+                Forms\Components\Select::make('role')
+                    ->options(Role::pluck('name', 'id')->toArray())
+                    ->required(),
             ]);
     }
 
@@ -66,19 +65,20 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -86,5 +86,5 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
-    }    
+    }
 }

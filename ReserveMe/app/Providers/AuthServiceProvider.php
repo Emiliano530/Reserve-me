@@ -4,6 +4,10 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\User;
+use App\Policies\AdminAccessPolicy;
+use Illuminate\Auth\Access\Gate;
+use Illuminate\Support\Facades\Gate as FacadesGate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -14,13 +18,15 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         //
-    ];
+    ]; 
 
     /**
      * Register any authentication / authorization services.
      */
-    public function boot(): void
+    public function boot()
     {
-        //
+        $this->registerPolicies(); 
+
+        FacadesGate::define('view-admin', [AdminAccessPolicy::class, 'viewAdmin']);
     }
 }

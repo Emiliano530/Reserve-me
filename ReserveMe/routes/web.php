@@ -3,6 +3,11 @@
 use App\Http\Controllers\DarkModeController;
 use App\Http\Livewire\MostrarOpciones;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Redirect;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -46,3 +51,4 @@ Route::get('/filtrados', function () {
 Route::get('/mesa/{mesaId}', function ($mesaId) {
     return view('reserve.tableData')->with('mesaId', $mesaId);
 })->name('mesa');
+
